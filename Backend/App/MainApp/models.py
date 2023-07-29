@@ -48,11 +48,16 @@ class Complaints(models.Model):
     recoveryMethod = models.ForeignKey('Handbook', verbose_name='Способ восстановления', related_name='handbook_recoverymethod', on_delete=models.CASCADE)
     usedSpareParts = models.CharField(verbose_name='Используемые запасные части')
     dateOfRecovery = models.DateField(verbose_name='Дата восстановления')
-    
-    def downtime(self):
-        return self.dateOfRecovery - self.dateOfFailure
-    
-    downtimeOfMachine = downtime()
+    downtimeOfMachine = models.IntegerField()
     machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='machine', on_delete=models.CASCADE)
     serviceCompany = models.ForeignKey('Users', verbose_name='Сервисная компания', related_name='handbook_serviceCompany', on_delete=models.CASCADE)
+    
+    
+    def save(self, *args, **kwargs):
+        self.downtimeOfMachine = self.dateOfRecovery - self.dateOfFailure
+        super(Complaints, self).save(*args, **kwargs)
+    
+
+class Handbook(models.Model):
+    name = models.CharField(verbose_name='Название')
     
