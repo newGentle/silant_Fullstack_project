@@ -4,75 +4,104 @@ from django.db import models
 
 class ModelOfMachine(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель машины')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель машины'
         verbose_name_plural = 'Модели машины'
+    
+    def __str__(self):
+        return f'{self.title}'
+    
 
 class ModelOfEngine(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель двигателя')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель двигателя'
         verbose_name_plural = 'Модели двигателей'
+        
+    def __str__(self):
+        return f'{self.title}'
+
 
 class ModelOfTransmission(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель трансмиссии')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель Трансмиссии'
         verbose_name_plural = 'Модели трансмиссии'
 
+    def __str__(self):
+        return f'{self.title}'
+
+
 class ModelOfMainAxle(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель ведущего моста')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Модель ведущего моста'
         verbose_name_plural = 'Модели ведущего моста'
 
-
+    def __str__(self):
+        return f'{self.title}'
+    
+    
 class ModelOfSteeringAxle(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель управляемого моста')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Модель управляемого моста'
         verbose_name_plural = 'Модели управляемого моста'
-
+    
+    def __str__(self):
+        return f'{self.title}'
+    
+    
 class TypeOfMaintenance(models.Model):
     title = models.CharField(max_length=128, verbose_name='Вид ТО')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Вид ТО'
         verbose_name_plural = 'Виды ТО'
     
+    def __str__(self):
+        return f'{self.title}'
+    
+    
 class TypeOfFailure(models.Model):
     title = models.CharField(max_length=128, verbose_name='характер отказа')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Причина отказа'
         verbose_name_plural = 'Причины отказа'
     
+    def __str__(self):
+        return f'{self.title}'
+    
     
 class MethodOfRecovery(models.Model):
     title = models.CharField(max_length=128, verbose_name='способ восстановления')
-    name = models.CharField(max_length=128, verbose_name='Название')
+    slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
     description = models.CharField(max_length=128, verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Способ Восстановления'
         verbose_name_plural = 'Способы восстановления'
+    
+    def __str__(self):
+        return f'{self.title}'
     

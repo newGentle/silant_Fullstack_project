@@ -9,6 +9,10 @@ class ServiceCompany(models.Model):
     class Meta:
         verbose_name = 'Сервисная компания'
         verbose_name_plural = 'Сервисные компании'
+    
+    def __str__(self):
+        return f'{self.name}'
+    
 
 class Client(models.Model):
     name = models.OneToOneField(User, verbose_name='Клиент', on_delete=models.CASCADE)
@@ -18,7 +22,8 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
         
     def __str__(self):
-        return self.name
+        return f'{self.name}'
+
 
 class Manager(models.Model):
     name = models.OneToOneField(User, verbose_name='Менеджер', on_delete=models.CASCADE)
@@ -28,4 +33,4 @@ class Manager(models.Model):
         verbose_name_plural = 'Менеджеры'
  
     def __str__(self):
-        return self.name
+        return f'{self.name}'

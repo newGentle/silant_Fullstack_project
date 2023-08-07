@@ -5,4 +5,7 @@ from .models import *
 
 admin.site.register(ServiceCompany)
 admin.site.register(Client)
-admin.site.register(Manager)
+
+@admin.register(Manager)
+class ManagerAdmin(admin.ModelAdmin):
+    fields = ['name',]

@@ -1,10 +1,11 @@
+from django.urls import path, include
 from rest_framework import routers
-from MainApp.viewsets import MachineViewSet
+from .views import MachineViewSet
 
 router = routers.SimpleRouter()
-
 router.register(r'machine', MachineViewSet, basename='machine')
 
 urlpatterns = [
-     *router.urls,
+    path('api/v1/', include(router.urls))
 ]
+
