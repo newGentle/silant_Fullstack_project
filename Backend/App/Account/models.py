@@ -75,6 +75,7 @@ class ServiceCompany(User):
     def __str__(self):
         return f'{self.name}'
     
+    
 
 class Client(User):
     name = models.CharField(max_length=128, verbose_name='Клиент')

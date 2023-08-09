@@ -1,4 +1,4 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 
 # Create your views here.
@@ -8,7 +8,7 @@ from .models import Machine
 
 class MachineViewSet(viewsets.ModelViewSet):
     # http_method_names = ('patch', 'get',)
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = MachineSerializer
     
     def get_queryset(self):
