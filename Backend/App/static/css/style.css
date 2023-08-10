@@ -1,0 +1,9 @@
+@font-face {
+    font-family: Astra;
+    src: url('../fonts/PT-Astra-Sans_Regular.ttf');
+}
+body {
+    padding: 0;
+    margin: 0;
+    font-family: Astra;
+}

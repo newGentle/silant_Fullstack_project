@@ -9,7 +9,8 @@ def addToGroup(sender, instance, **kwargs):
     group, created = Group.objects.get_or_create(name = 'Клиент')
     group.permissions.add(Permission.objects.get(id=24))
     if kwargs['created']:
-        user = User.objects.get(username = instance.username)
+        print(instance)
+        user = User.objects.get(username = instance)
         user.groups.add(group)
         user.save()
     

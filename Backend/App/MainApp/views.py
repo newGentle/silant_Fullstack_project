@@ -1,10 +1,15 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
+from .serializers import MachineSerializer
+from .models import Machine
+from django.views.generic import ListView
 
 # Create your views here.
 
-from .serializers import MachineSerializer
-from .models import Machine
+class MachinesList(ListView):
+    model = Machine
+    template_name = 'machines.html'
+    context_object_name = 'machines'
 
 class MachineViewSet(viewsets.ModelViewSet):
     # http_method_names = ('patch', 'get',)
