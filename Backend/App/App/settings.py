@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# AUTH_USER_MODEL = 'Account.User'
+AUTH_USER_MODEL = 'Account.User'
 
 # Application definition
 
@@ -153,8 +153,8 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_USER_MODEL_EMAIL_FIELD = None
 
-LOGIN_REDIRECT_URL = 'main_page'
-LOGOUT_REDIRECT_URL = '/account/login'
+LOGIN_REDIRECT_URL = '/main_page/'
+LOGOUT_REDIRECT_URL = '/account/login/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

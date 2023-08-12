@@ -3,8 +3,13 @@ from rest_framework import viewsets
 from .serializers import MachineSerializer
 from .models import Machine
 from django.views.generic import ListView
+from django.shortcuts import render
 
 # Create your views here.
+
+def Main_page(request):
+    context = {'content': "Hello world!!!"}
+    return render(request, 'main_page.html', context)
 
 class MachinesList(ListView):
     model = Machine
