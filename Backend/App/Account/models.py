@@ -42,16 +42,16 @@ class UserManager(BaseUserManager):
     
 class User(AbstractBaseUser, PermissionsMixin):
     class Role(models.TextChoices):
-        CONSUMER = 'CR', 'Consumer'
-        MANAGER = 'MR', 'Manager'
-        SERVICECOMPANY = 'SC', 'Service Company'
+        CONSUMER = 'CR', 'Клиент'
+        MANAGER = 'MR', 'Менеджер'
+        SERVICECOMPANY = 'SC', 'Сервисная компания'
         
     public_id = models.UUIDField(db_index=True, unique=True, default=uuid.uuid4, editable=False)
     username = models.CharField(db_index=True, max_length=128, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     # email = models.EmailField(db_index=True, unique=True, blank=True)
-    role = models.CharField(max_length=2, choices=Role.choices, default=Role.CONSUMER)
+    role = models.CharField(max_length=2, choices=Role.choices, default='')
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

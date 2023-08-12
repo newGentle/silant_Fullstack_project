@@ -1,6 +1,6 @@
 from django.db import models
 from Handbook.models import *
-from Account.models import *
+from Account.models import User
 # Create your models here.
 
 class Machine(models.Model):
@@ -19,8 +19,8 @@ class Machine(models.Model):
     consumer = models.CharField(max_length=128, verbose_name='Грузополучатель')
     operationAddress = models.CharField(max_length=128, verbose_name='Адрес поставки')
     additionalOptions = models.CharField(max_length=128, verbose_name='Доп. опции')
-    client = models.ForeignKey(Client, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
-    serviceCompany = models.ForeignKey(ServiceCompany, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)
+    client = models.ForeignKey(User, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
+    serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Машина'
@@ -36,9 +36,9 @@ class Maintenance(models.Model):
     operatingTime = models.IntegerField(verbose_name='Наработка, м/час')
     numberOrderWork = models.CharField(max_length=128, verbose_name='№ заказ-наряда')
     dateOrderWork = models.DateField(verbose_name='Дата заказ-наряда')
-    maintenanceServiceCompany = models.ForeignKey(ServiceCompany, verbose_name='Организация, проводившая ТО', related_name='maintenance_servicecompany', on_delete=models.CASCADE)
+    maintenanceServiceCompany = models.ForeignKey(User, verbose_name='Организация, проводившая ТО', related_name='maintenance_servicecompany', on_delete=models.CASCADE)
     machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='machine', on_delete=models.CASCADE)
-    serviceCompany = models.ForeignKey(ServiceCompany, verbose_name='Сервисная компания', related_name='maintenance_serviceCompany', on_delete=models.CASCADE)
+    serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='maintenance_serviceCompany', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Техническое Обслуживание'
@@ -55,7 +55,7 @@ class Complaints(models.Model):
     dateOfRecovery = models.DateField(verbose_name='Дата восстановления')
     downtimeOfMachine = models.IntegerField(verbose_name='Время простоя')
     machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='complaints_machine', on_delete=models.CASCADE)
-    serviceCompany = models.ForeignKey(ServiceCompany, verbose_name='Сервисная компания', related_name='complaints_serviceCompany', on_delete=models.CASCADE)
+    serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='complaints_serviceCompany', on_delete=models.CASCADE)
     
     class Meta:
         verbose_name = 'Рекламация'

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.fields.related import RelatedField
 from django.db.models.query import QuerySet
 from django.http.request import HttpRequest
-from .models import *
+from .models import User
 
 # Register your models here.
 
@@ -30,6 +30,6 @@ from .models import *
 # class ManagerAdmin(admin.ModelAdmin):
 #     fields = ['username', 'password']
     
-admin.site.register(Client)
-admin.site.register(ServiceCompany)
-admin.site.register(Manager)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'role', 'is_superuser']
