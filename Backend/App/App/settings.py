@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'Account.User'
+# AUTH_USER_MODEL = 'Account.User'
 
 # Application definition
 
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'MainApp',
     'Handbook',
     'Account',
+    'django_bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
     'allauth',
@@ -154,7 +155,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_USER_MODEL_EMAIL_FIELD = None
 
 LOGIN_REDIRECT_URL = '/main_page/'
-LOGOUT_REDIRECT_URL = '/account/login/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
