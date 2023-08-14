@@ -1,39 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% load static %}
-    <link href={% static 'css/style.css' %} rel='stylesheet' />
-</head>
-<body>
-    <header>
-        <div class="container">
-            <div class="wrapper">
-
-                <div class="logo">
-                    <img src="{% static 'images/Logotype accent RGB 1.jpg' %}" alt="Logo">
-                </div>
-                <div class="contacts">
-                    <p>+7-8352-20-12-09, telegram</p>
-                </div>
-                <div class="auth">
-                    <button class='auth_btn'>Авторизация</button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        {% load static %} <link href={% static 'css/style.css' %}
+        rel='stylesheet' />
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <div class="wrapper">
+                    <div class="logo">
+                        <img
+                            src="{% static 'images/Logotype accent RGB 1.jpg' %}"
+                            alt="Logo"
+                        />
+                    </div>
+                    <div class="contacts">
+                        <p>+7-8352-20-12-09, telegram</p>
+                    </div>
+                    <div class="auth">
+                        <button class="auth_btn">Авторизация</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    {% block body %}    
-    {% endblock body %}
-    
-    <Footer>
-        <div class="wrapper">
-            <p>+7-8352-20-12-09, telegram</p>
-            <p>Мой Силант 2023</p>
-        </div>
-    </Footer>
-</body>
+        {% block body %} {% endblock body %}
+
+        <footer>
+            <div class="wrapper">
+                <p>+7-8352-20-12-09, telegram</p>
+                <p>Мой Силант 2023</p>
+            </div>
+        </footer>
+    </body>
 </html>
