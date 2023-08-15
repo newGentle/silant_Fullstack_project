@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework import viewsets
 from .serializers import MachineSerializer
 from .models import Machine
@@ -8,7 +8,8 @@ from django.shortcuts import render
 # Create your views here.
 
 def Main_page(request):
-    context = {'content': "Hello world!!!"}
+    machs = Machine.objects.all()
+    context = {'content': "Hello world!!!", 'machines': machs}
     return render(request, 'main_page.html', context)
 
 class MachinesList(ListView):
@@ -18,11 +19,12 @@ class MachinesList(ListView):
 
 class MachineViewSet(viewsets.ModelViewSet):
     # http_method_names = ('patch', 'get',)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = MachineSerializer
+    # queryset = Machine
     
     def get_queryset(self):
         return Machine.objects.all()
     
-    def create(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+    # def create(self, request, *args, **kwargs):
+    #     return super().create(request, *args, **kwargs)

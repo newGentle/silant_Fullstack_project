@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Machine)
 admin.site.register(Maintenance)
 admin.site.register(Complaints)
+admin.site.register(Order)

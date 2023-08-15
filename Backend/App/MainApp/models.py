@@ -14,13 +14,7 @@ class Machine(models.Model):
     factoryNumberOfMainAxle = models.CharField(max_length=128, verbose_name='Зав. № ведущего моста')
     modelOfSteeringAxle = models.ForeignKey(ModelOfSteeringAxle, verbose_name='Модель управляемого моста', related_name='handbook_modelOfSteeringAxle', on_delete=models.CASCADE)
     factoryNumberOfSteeringAxle = models.CharField(max_length=128, verbose_name='Зав. № управляемого моста')
-    supplyContract = models.CharField(max_length=128, verbose_name='Договор поставки №, дата')
-    dateOfShipment = models.DateField(verbose_name='Дата отгрузки с завода')
-    consumer = models.CharField(max_length=128, verbose_name='Грузополучатель')
-    operationAddress = models.CharField(max_length=128, verbose_name='Адрес поставки')
-    additionalOptions = models.CharField(max_length=128, verbose_name='Доп. опции')
-    client = models.ForeignKey(User, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
-    serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)
+    
     
     class Meta:
         verbose_name = 'Машина'
@@ -65,3 +59,12 @@ class Complaints(models.Model):
         self.downtimeOfMachine = self.dateOfRecovery - self.dateOfFailure
         super(Complaints, self).save(*args, **kwargs)
     
+class Order(models.Model):
+    machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='order_machine', on_delete=models.CASCADE)
+    supplyContract = models.CharField(max_length=128, verbose_name='Договор поставки №, дата')
+    dateOfShipment = models.DateField(verbose_name='Дата отгрузки с завода')
+    consumer = models.CharField(max_length=128, verbose_name='Грузополучатель')
+    operationAddress = models.CharField(max_length=128, verbose_name='Адрес поставки')
+    additionalOptions = models.CharField(max_length=128, verbose_name='Доп. опции')
+    client = models.ForeignKey(User, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
+    serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)

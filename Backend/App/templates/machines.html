@@ -1,7 +1,2 @@
-{% extends 'base.html' %}
-
-
-{% block body %}
-    <h1>{{ request.user.username }}</h1>
-    {{machines}}
-{% endblock body %}
+<h1>{{ request.user.role }}</h1>
+{{machines}}
