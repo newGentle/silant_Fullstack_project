@@ -5,31 +5,31 @@ from rest_framework import serializers
 class ModelOfMachineSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelOfMachine
-        fields = ['title',]
+        fields = ['id', 'title',]
 
 
 class ModelOfEngineSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelOfEngine
-        fields = ['title',]
+        fields = ['id', 'title',]
 
 
 class ModelOfTransmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelOfTransmission
-        fields = ['title',]
+        fields = ['id', 'title',]
 
 
 class ModelOfMainAxleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelOfMainAxle
-        fields = ['title',]
+        fields = ['id', 'title',]
 
 
 class ModelOfSteeringAxleSerializer(serializers.ModelSerializer):
     class Meta:
         model = ModelOfSteeringAxle
-        fields = ['title',]
+        fields = ['id', 'title',]
 
 
 class MachineSerializer(serializers.ModelSerializer):

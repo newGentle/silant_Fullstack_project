@@ -6,8 +6,8 @@ router = routers.SimpleRouter()
 router.register(r'machine', MachineViewSet, basename='machine')
 
 urlpatterns = [
-    path('', Main_page, name='main_page'),
-    path('machines/', MachinesList.as_view(), name='machines_list'),
-    path('api/v1/', include(router.urls))
+    # path('', Main_page, name='main_page'),
+    # path('machines/', MachinesList.as_view(), name='machines_list'),
+    path('machines/', include(router.urls))
 ]
 

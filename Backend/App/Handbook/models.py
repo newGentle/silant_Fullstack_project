@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.urls import reverse
 # Create your models here.
 
 class ModelOfMachine(models.Model):
@@ -13,6 +13,9 @@ class ModelOfMachine(models.Model):
     
     def __str__(self):
         return f'{self.title}'
+    
+    def get_absolute_url(self):
+        return reverse("model_detail", kwargs={"pk": self.pk, "title": self.title})
     
 
 class ModelOfEngine(models.Model):
