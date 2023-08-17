@@ -1,44 +1,22 @@
 {% extends 'base.html' %} 
 {% load static %}
+
 {% block body %}
-<div class="container">
-    <h1>Проверьте комплектацию и технические характеристики техники Силант</h1>
-    <div class="search_form">
-        <input type="text" id='factoryNumberInput' placeholder="Заводской номер" />
-        <button id='factoryNumberButton'>Поиск</button>
-    </div>
-    <div class="result">
-        <h3>
-            Информация о комплектации и технических характеристиках Вашей
-            техники
-        </h3>
-        <div class="result_table">
-            <table id='dataTable'>
-                <tr>
-                    <th colspan="10">ОБЩИЕ СВЕДЕНИЯ</th>
-                </tr>
-                <tr>
-                    <th>Модель техники</th>
-                    <th>Зав. № машины</th>
-                    <th>Модель двигателя</th>
-                    <th>Зав. № двигателя</th>
-                    <th>Модель трансмиссии (производитель, артикул)</th>
-                    <th>Зав. № трансмиссии</th>
-                    <th>Модель ведущего моста</th>
-                    <th>Зав. № ведущего моста</th>
-                    <th>Модель управляемого моста</th>
-                    <th>Зав. № управляемого моста</th>
-                </tr>
-                <tr id='machineInfo'>
-               
-                </tr>
-            </table>
+
+{% if user.is_authenticated %}
+    <div class="container">
+        <div class="auth_role">
+            {{ request.user.users.get_role_display}}
         </div>
     </div>
-    {% if user.is_authenticated %}
-        {% include 'machines.html' %}
-    {% endif %}
-</div>
+{% endif %}
+
+
+{% if user.is_authenticated %}
+    {% include 'authorized.html' %}
+{% else %}
+    {% include 'unauthorized.html' %}
+{% endif %}
 
 <script src="{% static 'js/scripts.js' %}"></script>
 {% endblock body %}

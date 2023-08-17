@@ -16,7 +16,7 @@ const search = async () => {
         const cell_FNOMA = tr.insertCell(-1);
         const cell_MOSA = tr.insertCell(-1);
         const cell_FNOSA = tr.insertCell(-1);
-        cell_MOM.innerHTML = `<a href="${data.modelOfMachine.id}">` + data.modelOfMachine.title + '</a>';
+        cell_MOM.innerHTML = data.modelOfMachine.title;
         cell_FNOM.innerHTML = data.factoryNumberOfMachine;
         cell_MOE.innerHTML = data.modelOfEngine.title;
         cell_FNOE.innerHTML = data.factoryNumberOfEngine;

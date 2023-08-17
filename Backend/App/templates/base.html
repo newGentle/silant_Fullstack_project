@@ -5,7 +5,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
-        {% load static %} <link href={% static 'css/style.css' %}
+        {% load static %} 
+        <link href={% static 'css/style.css' %}
         rel='stylesheet' />
     </head>
     <body>
@@ -13,16 +14,23 @@
             <div class="container">
                 <div class="wrapper">
                     <div class="logo">
+                        <a href="/">
                         <img
-                            src="{% static 'images/Logotype accent RGB 1.jpg' %}"
+                            src="{% static 'images/logo.png' %}"
                             alt="Logo"
                         />
+                    </a>
                     </div>
                     <div class="contacts">
                         <p>+7-8352-20-12-09, telegram</p>
                     </div>
                     <div class="auth">
-                        <a href='/accounts/login' class="auth_btn">Авторизация</a>
+                        {% if request.user.is_authenticated %}
+                            <p>{{ request.user.username}}</p>
+                            <a href='/accounts/logout' class="auth_btn">Выйти</a>
+                        {% else %}
+                            <a href='/accounts/login' class="auth_btn">Авторизация</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
