@@ -32,7 +32,3 @@ const search = async () => {
 
 document.getElementById('factoryNumberButton').addEventListener('click', search)
 
-
-
-
-

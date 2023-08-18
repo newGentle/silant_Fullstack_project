@@ -102,6 +102,45 @@ header {
     border-bottom: #000000 1px solid;
 }
 
+.tabs_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: #000000 1px solid;
+    border-bottom: none;
+
+}
+
+.tabs_header input {
+    display: none;
+}
+
+.tabs_header label {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: #000000 1px solid;
+}
+
+.tabs_header label:hover {
+    background-color: var(--bg_color);
+}
+
+.tabs_header input[type="radio"]:checked + label {
+    background-color: var(--main_color);
+    color: var(--bg_color);
+    border-bottom: none;
+}
+
+.tabs_content {
+    border: #000000 1px solid;
+    border-top: none;
+}
+
+
 footer {
     position: fixed;
     bottom: 0;
