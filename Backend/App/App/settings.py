@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'MainApp',
     'Handbook',
     'Account',
-    'django_bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
     'allauth',
@@ -134,8 +133,6 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
-MEDIA_ROOT = 'images'
-MEDIA_URL = 'images/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
