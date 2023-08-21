@@ -65,6 +65,13 @@ class Order(models.Model):
     dateOfShipment = models.DateField(verbose_name='Дата отгрузки с завода')
     consumer = models.CharField(max_length=128, verbose_name='Грузополучатель')
     operationAddress = models.CharField(max_length=128, verbose_name='Адрес поставки')
-    additionalOptions = models.CharField(max_length=128, verbose_name='Доп. опции')
+    additionalOptions = models.TextField(verbose_name='Доп. опции')
     client = models.ForeignKey(User, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
     serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name = 'Заказ'
+        verbose_name_plural = 'Заказы'
+        
+    def __str__(self):
+        return f'№ {self.supplyContract}'

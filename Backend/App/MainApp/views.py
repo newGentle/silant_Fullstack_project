@@ -9,7 +9,9 @@ from django.shortcuts import render
 
 def Main_page(request):
     machs = Machine.objects.all()
+    print(request.user.users.get_role_display())
     context = {'content': "Hello world!!!", 'machines': machs}
+    
     return render(request, 'main_page.html', context)
 
 class MachinesList(ListView):
@@ -22,7 +24,6 @@ class MaintinanceList(ListView):
     template_name = ''
 
 class MachineViewSet(viewsets.ModelViewSet):
-    # http_method_names = ('patch', 'get',)
     permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = MachineSerializer
     
