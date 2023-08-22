@@ -4,6 +4,9 @@ from .models import Users
 # Register your models here.
 
 class UsersAdmin(admin.ModelAdmin):
-    list_display = ['user', 'role']
+    list_display = ['get_username', 'role']
+    
+    def get_username(self, obj):
+        return obj.user.first_name
     
 admin.site.register(Users, UsersAdmin)

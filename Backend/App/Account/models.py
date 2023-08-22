@@ -17,9 +17,8 @@ class Users(models.Model):
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
     
-    def __str__(self):
-        return f'{self.user.username}'
+    # def __str__(self):
+    #     return self.user.first_name
     
     def __repr__(self):
         return self.get_role_display()
-    

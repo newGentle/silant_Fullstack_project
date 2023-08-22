@@ -37,6 +37,9 @@ class Maintenance(models.Model):
     class Meta:
         verbose_name = 'Техническое Обслуживание'
         verbose_name_plural = 'Техническое Обслуживание'
+        
+    def __str__(self):
+        return f'{self.typeOfMaintenance}'
 
 
 class Complaints(models.Model):
@@ -45,9 +48,9 @@ class Complaints(models.Model):
     nodeOfFailure = models.ForeignKey(TypeOfFailure, verbose_name='Узел отказа', related_name='handbook_nodeoffailure', on_delete=models.CASCADE)
     descriptionOfFailure = models.CharField(max_length=128, verbose_name='Описание отказа')
     recoveryMethod = models.ForeignKey(MethodOfRecovery, verbose_name='Способ восстановления', related_name='handbook_recoverymethod', on_delete=models.CASCADE)
-    usedSpareParts = models.CharField(max_length=128, verbose_name='Используемые запасные части')
+    usedSpareParts = models.CharField(max_length=128, verbose_name='Используемые запасные части', blank=True)
     dateOfRecovery = models.DateField(verbose_name='Дата восстановления')
-    downtimeOfMachine = models.IntegerField(verbose_name='Время простоя')
+    downtimeOfMachine = models.IntegerField(verbose_name='Время простоя', blank=True)
     machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='complaints_machine', on_delete=models.CASCADE)
     serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='complaints_serviceCompany', on_delete=models.CASCADE)
     
@@ -56,9 +59,12 @@ class Complaints(models.Model):
         verbose_name_plural = 'Рекламации'
     
     def save(self, *args, **kwargs):
-        self.downtimeOfMachine = self.dateOfRecovery - self.dateOfFailure
+        _days = self.dateOfRecovery - self.dateOfFailure
+        self.downtimeOfMachine = _days.total_seconds() // (24 * 3600)
+        
         super(Complaints, self).save(*args, **kwargs)
     
+
 class Order(models.Model):
     machine = models.ForeignKey(Machine, verbose_name='Машина', related_name='order_machine', on_delete=models.CASCADE)
     supplyContract = models.CharField(max_length=128, verbose_name='Договор поставки №, дата')
