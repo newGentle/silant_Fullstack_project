@@ -16,13 +16,14 @@
             <label for="complaints">Рекламация</label>
         </div>
         <div class="tabs_content">
-            <table id="tabs_content_table">
+            
                 
-                {{machines}}
-            </table>
+             {% include 'table/machines_table.html' %}
+             {% include 'table/maintenances_table.html' %}
+             {% include 'table/complaints_table.html' %}
+        
         </div>
     </div>
 </div>
-
 <script src="{% static 'js/authorized.js' %}"></script>
 {% endblock body %}

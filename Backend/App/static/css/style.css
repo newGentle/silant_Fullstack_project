@@ -83,12 +83,12 @@ header {
     overflow-y: hidden;
 }
 
-.result_table > table {
+.result_table > table, .tabs_table {
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
 }
 
-.result_table > table, tr, td, th {
+.result_table > table, tr, td, th, .tabs_table, .tabs_table > tbody {
     border: 1px solid #000000;
     border-collapse: collapse;
     text-align: center;
@@ -135,17 +135,17 @@ header {
     border-bottom: none;
 }
 
-.tabs_content {
-    border: #000000 1px solid;
-    border-top: none;
+
+.phantom {
+    margin-top: 15px;
+    height: 84px;
 }
-
-
 footer {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    background-color: #fff;
 }
 
 footer > .wrapper {
