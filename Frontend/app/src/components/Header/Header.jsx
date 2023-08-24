@@ -1,39 +1,17 @@
 import * as React from 'react';
 import { CustomContainer } from '../CustomComponents/CustomContainer/CustomContainer';
-import { Button, createTheme, darken, lighten, ThemeProvider } from '@mui/material';
+import { Button, ThemeProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { theme } from '../../Theme/Theme';
 
 const Header = () => {
     const navigate = useNavigate();
-    const theme = createTheme({
-        components: {
-            
-            MuiButton: {
-                styleOverrides: {
-                    root: {
-                        
-                            backgroundColor: "var(--main_color)",
-                            fontFamily: "Astra, Inter, sans",
-                            textTransform: "none",
-                            borderRadius: "15px",
-                            padding: "5px 25px",
-                            color: "var(--bg_color)",
-                            boxShadow: "7px 7px 5px -5px rgba(34, 60, 80, 0.6)",
 
-                            "&:hover": {
-                                backgroundColor: darken('#163E6C', 0.2),
-                            }
-                        
-                    }
-                },
-            }
-        }
-    })
 
     return (
-        <CustomContainer>
+        <CustomContainer style={{borderBottom: '1px solid var(--bg_color)'}}>
             
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '20px 0'}}>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 0' }}>
                     <div >
                         <a href="/"> 
                             <img src="http://127.0.0.1:8000/static/images/logo.png" alt="Logo" style={{width: '300px'}} />

@@ -2,13 +2,13 @@ from typing import Any, Dict
 from django.shortcuts import render
 from django.views.generic import DetailView
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from .serializers import ModelOfEngineSerialiser
 from .models import *
 # Create your views here.
 
 class ModelOfEngineViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticated,)
     serializer_class = ModelOfEngineSerialiser
     
     def get_queryset(self):

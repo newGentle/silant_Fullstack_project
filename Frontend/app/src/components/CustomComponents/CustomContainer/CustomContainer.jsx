@@ -25,28 +25,27 @@ const CustomContainer = (props) => {
     const responsive = () => {
 
         if (xs) {
-            return { width: '350px'}
+            return { maxWidth: '350px'}
         }
 
         if (sm) {
-            return { width: '1300px'}
+            return { maxWidth: '1300px'}
         }
 
         if (md) {
-            return { width: '1350px'}
+            return { maxWidth: '1350px'}
         }
         
         if (lg) {
-            return { width: '1500px', padding: '0 30px'}
+            return { padding: '0 20px'}
         }
 
         if (xl) {
-            return { width: '1600px', padding: '0 30px'}
+            return { padding: '0 20px'}
         }
         
     }
     const resp = responsive()
-    console.log(resp)
 
     return (
         <Container maxWidth='false' style={resp} {...others}>
