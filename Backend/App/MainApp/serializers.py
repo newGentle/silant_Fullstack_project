@@ -1,6 +1,8 @@
 from .models import *
 from Handbook.models import *
 from rest_framework import serializers
+from Account.models import *
+     
 
 class ModelOfMachineSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,4 +46,18 @@ class MachineSerializer(serializers.ModelSerializer):
                 'factoryNumberOfEngine', 'modelOfTransmission', 'factoryNumberOfTransmission', \
                 'modelOfMainAxle', 'factoryNumberOfMainAxle', 'modelOfSteeringAxle', \
                 'factoryNumberOfSteeringAxle']
-        
+
+
+class FirstNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name']
+            
+class OrderSerializer(serializers.ModelSerializer):
+    machine = MachineSerializer(read_only = True)
+    client = FirstNameSerializer(read_only = True)
+    serviceCompany = FirstNameSerializer(read_only = True)
+    class Meta:
+        model = Order
+        fields = ['id', 'machine', 'supplyContract', 'dateOfShipment', \
+            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']

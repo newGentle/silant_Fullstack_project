@@ -1,6 +1,6 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import viewsets
-from .serializers import MachineSerializer
+from .serializers import MachineSerializer, OrderSerializer
 from .models import Machine, Maintenance, Complaints, Order
 from django.views.generic import ListView
 from django.db.models import Q 
@@ -55,13 +55,27 @@ class MachinesList(ListView):
         
 
     
-class MaintinanceList(ListView):
-    model = Maintenance
-    template_name = ''
+# class MaintinanceList(ListView):
+#     model = Maintenance
+#     template_name = ''
 
-class MachineViewSet(viewsets.ModelViewSet):
+
+class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
-    serializer_class = MachineSerializer
+    serializer_class = OrderSerializer
+    http_method_names = ('get',)
     
     def get_queryset(self):
-        return Machine.objects.all()
+        user = self.request.user
+        if user.is_anonymous:
+            return ''
+            
+        if user.is_superuser or user.users.role == 'MR':
+            return Order.objects.all()
+ 
+        
+class MachineViewSet(viewsets.ModelViewSet):
+    serializer_class = MachineSerializer
+    queryset = Machine.objects.all()
+    http_method_names = ('get',)
+    

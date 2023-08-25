@@ -10,6 +10,7 @@ from .models import *
 class ModelOfEngineViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ModelOfEngineSerialiser
+    http_method_names = ('get',)
     
     def get_queryset(self):
         return ModelOfEngine.objects.all()

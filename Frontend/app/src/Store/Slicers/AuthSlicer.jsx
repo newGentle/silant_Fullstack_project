@@ -13,15 +13,14 @@ export const UserLogin = createAsyncThunk(
     async ({ username, password }, { rejectWithValue }) => {
         try {
             const { data } = await axios.post(
-                'http://127.0.0.1:8000/api/v1/account/auth-token/',
+                'http://127.0.0.1:8000/api/v1/token',
                 { username, password},
                 header
             );
             localStorage.setItem("userLogin", username);
-            localStorage.setItem("accessToken", data.accessToken);
-            localStorage.setItem("expire", data.expire);
+            localStorage.setItem("accessToken", data.access);
             localStorage.setItem("Authenticated", true);
-
+            console.log(data)
             return data;
         }
         catch (error) {
@@ -54,7 +53,6 @@ const AuthSlicer = createSlice({
         logout: (state) => {
             localStorage.removeItem("accessToken")
             localStorage.removeItem("userLogin")
-            localStorage.removeItem("expire")
             localStorage.setItem("Authenticated", false)
             state.loading = false
             state.error = null

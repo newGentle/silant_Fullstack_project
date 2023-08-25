@@ -2,7 +2,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User, Group, Permission
 from .models import Users
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
 
 
 @receiver(post_save, sender = Users)
@@ -34,7 +34,7 @@ def addToGroup(sender, instance=None, created=False, **kwargs):
             group.permissions.add(Permission.objects.get(id=40))
             
         user = User.objects.get(username = instance)
-        Token.objects.get_or_create(user=user)
+        # Token.objects.get_or_create(user=user)
+        
         user.groups.add(group)
         user.save()
-        

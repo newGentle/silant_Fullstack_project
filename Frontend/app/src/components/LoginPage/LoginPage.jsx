@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
-import { FormControl, Input, Button, ThemeProvider } from "@mui/material";
+import {  Input, Button, ThemeProvider } from "@mui/material";
 import { theme } from "../../Theme/Theme";
 import { UserLogin } from "../../Store/Slicers/AuthSlicer";
 

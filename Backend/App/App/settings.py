@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-import datetime
+from datetime import timedelta
 
 load_dotenv('.env')
 
@@ -45,12 +45,12 @@ INSTALLED_APPS = [
     'MainApp',
     'Handbook',
     'Account',
-    'crispy_forms',
-    'crispy_bootstrap5',
+    # 'crispy_forms',
+    # 'crispy_bootstrap5',
     'allauth',
     'allauth.account',
     'rest_framework',
-    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'corsheaders',
     
 ]
@@ -160,11 +160,17 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ]
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5)
 }
 
 CORS_ALLOWED_ORIGINS = [
