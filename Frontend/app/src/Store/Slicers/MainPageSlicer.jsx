@@ -18,7 +18,6 @@ export const MachineData = createAsyncThunk(
                 
                 header
             );
-            console.log(data)
             return data;
         }
         catch (error) {
@@ -44,7 +43,7 @@ const MachineSlicer = createSlice({
     
     extraReducers: (builder) => {
         builder.addCase(MachineData.fulfilled, (state, action) => {
-            state.accessToken = action.payload;
+            state.data = action.payload;
             state.status = 'OK';
             state.loading = false;
             state.success = true;
