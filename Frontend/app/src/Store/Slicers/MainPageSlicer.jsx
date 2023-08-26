@@ -4,7 +4,7 @@ import axios from 'axios';
 const header = {
     headers: {
         "Content-type": "application/json",
-        "Accept": "application/json",
+        "Accept": "*/*",
         "Authorization": "Bearer " + localStorage.getItem("accessToken")
     },
 };
@@ -13,11 +13,11 @@ export const MachineData = createAsyncThunk(
     "machine/MachineData",
     async (_, { rejectWithValue }) => {
         try {
-            const { data } = await axios.get(
+            const {data} = await axios.get(
                 'http://127.0.0.1:8000/api/v1/order/',
-                
                 header
             );
+         
             return data;
         }
         catch (error) {
