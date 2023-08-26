@@ -34,6 +34,7 @@ const initialState = {
     error: null,
     success: false,
     status: null,
+    data: null
 };
 
 const MachineSlicer = createSlice({

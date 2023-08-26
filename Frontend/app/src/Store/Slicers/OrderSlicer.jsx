@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 
-const header = {
-    headers: {
-        "Content-type": "application/json",
-        "Accept": "*/*",
-        "Authorization": "Bearer " + localStorage.getItem("accessToken")
-    },
-};
-
 export const OrderData = createAsyncThunk(
     "order/OrderData",
-    async (_, { rejectWithValue }) => {
+    async (accessToken, { rejectWithValue }) => {
         try {
+            
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + accessToken
+                },
+            };
+
             const {data} = await axios.get(
                 'http://127.0.0.1:8000/api/v1/order/',
                 header

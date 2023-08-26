@@ -7,16 +7,20 @@ import { OrderData } from "../../Store/Slicers/OrderSlicer";
 const Authorized = () => {
     const dispatch = useDispatch();
 
-    React.useEffect(() => {
-        dispatch(OrderData());
-    }, [dispatch]);
-
     const data = useSelector((state) => state.order);
+    const logged = useSelector((state) => state.login);
 
-    if (!data.success) {
-        console.log(data.data);
-        return "loading";
-    }
+    React.useEffect(() => {
+        if (logged.is_Auth){
+            dispatch(OrderData(localStorage.getItem('accessToken')));
+        }
+    }, [dispatch, logged]);
+
+
+    // if (!data.success) {
+    //     console.log(data.data);
+    //     return "loading";
+    // }
 
     return (
         <CustomContainer>
@@ -44,9 +48,13 @@ const Authorized = () => {
                             <th>Комплектация (доп. опции)</th>
                             <th>Сервисная компания</th>
                         </tr>
-
-                        {data.data.map((value) => (
-                            <tr key={value.id} id="machineInfo">
+                        {data.loading || !logged.is_Auth || !data.success ? (
+                            <tr>
+                                <td>Загрузка</td>
+                            </tr>
+                        ):
+                        (data.data.map((value) => (
+                            <tr key={value.id} >
                                 <td>{value.machine.modelOfMachine.title}</td>
                                 <td>{value.machine.factoryNumberOfMachine}</td>
                                 <td>{value.machine.modelOfEngine.title}</td>
@@ -64,7 +72,7 @@ const Authorized = () => {
                                 <td>{value.additionalOptions}</td>
                                 <td>{value.serviceCompany.first_name}</td>
                             </tr>
-                        ))}
+                        )))}
                     </tbody>
                 </Table>
             </div>

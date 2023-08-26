@@ -6,22 +6,42 @@ import { useDispatch, useSelector } from "react-redux";
 import { MachineData } from "../../Store/Slicers/MachineSlicer";
 
 function Unauthorized() {
+    let status = true;
+    let message = '';
     const dispatch = useDispatch();
     const data = useSelector((state) => state.machine);
+    // const {status, error, success} = useSelector((state) => state.machine);
 
     const submit = () => {
-        const machine = document.getElementById('factoryNumberOfMachine').value
+        const machine = document.getElementById("factoryNumberOfMachine").value;
         dispatch(MachineData(machine));
     };
 
-    console.log(data);
-
+    if (data.data === null) {
+        status = false;
+    }
+    
+    if (data.status === 'BAD') {
+        status = false;
+        message = 'Техника с таким заводским номером отсутствует'
+    }
+    
     return (
         <CustomContainer>
-            <Input type="text" placeholder="Зав. № техники" id="factoryNumberOfMachine" />
-            <ThemeProvider theme={theme}>
+            <h1 style={{ textAlign: "center" }}>
+                Проверьте комплектацию и технические характеристики техники
+                Силант
+            </h1>
+            <hr />
+            <div style={{ margin: "30px 0" }}>
+                <Input
+                    type="text"
+                    placeholder="Зав. № техники"
+                    id="factoryNumberOfMachine"
+                />
+                <ThemeProvider theme={theme}>
                     <Button
-                        style={{ marginTop: "10px" }}
+                        style={{ marginLeft: "10px" }}
                         onClick={() => {
                             submit();
                         }}
@@ -29,7 +49,11 @@ function Unauthorized() {
                         Искать
                     </Button>
                 </ThemeProvider>
-            
+            </div>
+            <h3 style={{ textAlign: "center" }}>
+                Информация о комплектации и технических характеристиках Вашей
+                техники
+            </h3>
             <div style={{ overflowX: "scroll" }}>
                 <Table>
                     <tbody>
@@ -48,10 +72,26 @@ function Unauthorized() {
                             <th>Модель управляемого моста</th>
                             <th>Зав. № управляемого моста</th>
                         </tr>
-                        <tr id="machineInfo">
-                            <td>{data.status === 'BAD' ? data.error : 'OK'}</td>
-                            
-                        </tr>
+                        {!status ? (
+                            <tr>
+                                <td colSpan={10}>
+                                    {message}
+                                </td>
+                            </tr>
+                        ) : (
+                            <tr>
+                                <td>{data.data.modelOfMachine.title}</td>
+                                <td>{data.data.factoryNumberOfMachine}</td>
+                                <td>{data.data.modelOfEngine.title}</td>
+                                <td>{data.data.factoryNumberOfEngine}</td>
+                                <td>{data.data.modelOfTransmission.title}</td>
+                                <td>{data.data.factoryNumberOfTransmission}</td>
+                                <td>{data.data.modelOfMainAxle.title}</td>
+                                <td>{data.data.factoryNumberOfMainAxle}</td>
+                                <td>{data.data.modelOfSteeringAxle.title}</td>
+                                <td>{data.data.factoryNumberOfSteeringAxle}</td>
+                            </tr>
+                        )}
                     </tbody>
                 </Table>
             </div>
