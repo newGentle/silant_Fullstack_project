@@ -3,7 +3,7 @@ import * as React from "react";
 const Footer = () => {
     return (
         <>
-            <div></div>
+            <div style={{height: '81px'}}></div>
             <div
                 style={{
                     position: "fixed",
@@ -11,7 +11,8 @@ const Footer = () => {
                     bottom: 0,
                     width: '100%',
                     padding: '15px 0',
-                    borderTop: '1px solid var(--bg_color)'
+                    borderTop: '1px solid var(--bg_color)',
+                    backgroundColor: '#fff'
                 }}
             >
                 <div

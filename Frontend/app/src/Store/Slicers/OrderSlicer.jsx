@@ -9,8 +9,8 @@ const header = {
     },
 };
 
-export const MachineData = createAsyncThunk(
-    "machine/MachineData",
+export const OrderData = createAsyncThunk(
+    "order/OrderData",
     async (_, { rejectWithValue }) => {
         try {
             const {data} = await axios.get(
@@ -37,24 +37,24 @@ const initialState = {
     status: null,
 };
 
-const MachineSlicer = createSlice({
-    name: "machine",
+const OrderSlicer = createSlice({
+    name: "order",
     initialState,
     
     extraReducers: (builder) => {
-        builder.addCase(MachineData.fulfilled, (state, action) => {
+        builder.addCase(OrderData.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'OK';
             state.loading = false;
             state.success = true;
         });
 
-        builder.addCase(MachineData.pending, (state) => {
+        builder.addCase(OrderData.pending, (state) => {
             state.loading = true;
             state.error = null;
         });
 
-        builder.addCase(MachineData.rejected, (state, action) => {
+        builder.addCase(OrderData.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
             state.status = "BAD";
@@ -62,4 +62,4 @@ const MachineSlicer = createSlice({
     },
 });
 
-export default MachineSlicer.reducer;
+export default OrderSlicer.reducer;

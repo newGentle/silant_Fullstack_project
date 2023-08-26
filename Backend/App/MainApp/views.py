@@ -7,13 +7,6 @@ from django.db.models import Q
 
 # Create your views here.
 
-# def Main_page(request):
-#     machs = Machine.objects.all()
-#     print(request.user.users)
-#     context = {'content': "Hello world!!!", 'machines': machs}
-    
-#     return render(request, 'main_page.html', context)
-
 class MachinesList(ListView):
     model = Machine
     template_name = 'main_page.html'
@@ -54,12 +47,6 @@ class MachinesList(ListView):
             return context
         
 
-    
-# class MaintinanceList(ListView):
-#     model = Maintenance
-#     template_name = ''
-
-
 class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = OrderSerializer
@@ -67,8 +54,6 @@ class OrderViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        if user.is_anonymous:
-            return ''
             
         if user.is_superuser or user.users.role == 'MR':
             return Order.objects.all()
@@ -78,4 +63,5 @@ class MachineViewSet(viewsets.ModelViewSet):
     serializer_class = MachineSerializer
     queryset = Machine.objects.all()
     http_method_names = ('get',)
+    
     

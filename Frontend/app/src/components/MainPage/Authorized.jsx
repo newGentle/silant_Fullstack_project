@@ -2,16 +2,16 @@ import * as React from "react";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
 import { Table } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { MachineData } from "../../Store/Slicers/MainPageSlicer";
+import { OrderData } from "../../Store/Slicers/OrderSlicer";
 
 const Authorized = () => {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
-        dispatch(MachineData());
+        dispatch(OrderData());
     }, [dispatch]);
 
-    const data = useSelector((state) => state.machine);
+    const data = useSelector((state) => state.order);
 
     if (!data.success) {
         console.log(data.data);
@@ -60,6 +60,9 @@ const Authorized = () => {
                                 <td>{value.dateOfShipment}</td>
                                 <td>{value.client.first_name}</td>
                                 <td>{value.consumer}</td>
+                                <td>{value.operationAddress}</td>
+                                <td>{value.additionalOptions}</td>
+                                <td>{value.serviceCompany.first_name}</td>
                             </tr>
                         ))}
                     </tbody>
