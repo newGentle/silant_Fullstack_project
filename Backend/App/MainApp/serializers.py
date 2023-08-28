@@ -34,6 +34,30 @@ class ModelOfSteeringAxleSerializer(serializers.ModelSerializer):
         fields = ['id', 'title',]
 
 
+class FirstNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name']
+        
+
+class TypeOfMaintenanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypeOfMaintenance
+        fields = ['id', 'title', 'slug', 'description']
+
+
+class TypeOfFailureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypeOfFailure
+        fields = '__all__'
+
+
+class MethodOfRecoverySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MethodOfRecovery
+        fields = '__all__'
+        
+        
 class MachineSerializer(serializers.ModelSerializer):
     modelOfMachine = ModelOfMachineSerializer(read_only=True)
     modelOfEngine = ModelOfEngineSerializer(read_only=True)
@@ -45,14 +69,9 @@ class MachineSerializer(serializers.ModelSerializer):
         fields = ['factoryNumberOfMachine', 'modelOfMachine', 'modelOfEngine', \
                 'factoryNumberOfEngine', 'modelOfTransmission', 'factoryNumberOfTransmission', \
                 'modelOfMainAxle', 'factoryNumberOfMainAxle', 'modelOfSteeringAxle', \
-                'factoryNumberOfSteeringAxle']
-
-
-class FirstNameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['first_name']
-            
+                'factoryNumberOfSteeringAxle']        
+        
+        
 class OrderSerializer(serializers.ModelSerializer):
     machine = MachineSerializer(read_only = True)
     client = FirstNameSerializer(read_only = True)
@@ -60,4 +79,27 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'machine', 'supplyContract', 'dateOfShipment', \
-            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']
+            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']        
+
+        
+class MaintenanceSerializer(serializers.ModelSerializer):
+    machine = MachineSerializer(read_only = True)
+    typeOfMaintenance = TypeOfMaintenanceSerializer(read_only = True)
+    maintenanceServiceCompany = FirstNameSerializer(read_only = True)
+    serviceCompany = FirstNameSerializer(read_only = True)
+    class Meta:
+        model = Maintenance
+        fields = ['id', 'dateOfMaintenance', 'operatingTime', 'numberOrderWork', \
+            'dateOrderWork', 'maintenanceServiceCompany', 'serviceCompany', 'typeOfMaintenance', 'machine']
+        
+        
+class ComplaintsSerializer(serializers.ModelSerializer):
+    machine = MachineSerializer(read_only = True)
+    nodeOfFailure = TypeOfFailureSerializer(read_only = True)
+    recoveryMethod = MethodOfRecoverySerializer(read_only = True)
+    serviceCompany = FirstNameSerializer(read_only = True)
+    class Meta:
+        model = Complaints
+        fields = ['id', 'machine', 'dateOfFailure', 'operatingTime', 'nodeOfFailure', \
+            'descriptionOfFailure', 'recoveryMethod', 'usedSpareParts', 'dateOfRecovery', \
+                'downtimeOfMachine', 'serviceCompany']

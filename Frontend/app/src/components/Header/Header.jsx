@@ -3,11 +3,22 @@ import { CustomContainer } from "../CustomComponents/CustomContainer/CustomConta
 import { Button, ThemeProvider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../Theme/Theme";
+import { useDispatch, useSelector } from "react-redux";
+import { UserData } from "../../Store/Slicers/UserInfoSlicer";
 
 const Header = () => {
     const navigate = useNavigate();
-    const auth = localStorage.getItem("accessToken");
+    const dispatch = useDispatch();
+    
+    const userInfo = useSelector((state) => state.user);
+    
+    React.useEffect(() => {
+        if (localStorage.getItem('accessToken') || userInfo.success){
+            dispatch(UserData(localStorage.getItem('accessToken')));
+        }
+    }, [dispatch, userInfo.success]);
 
+    
     return (
         <CustomContainer style={{ borderBottom: "1px solid var(--bg_color)" }}>
             <div
@@ -30,10 +41,10 @@ const Header = () => {
                 <div>
                     <p>+7-8352-20-12-09, telegram</p>
                 </div>
-                {auth ? (
+                {localStorage.getItem('Authenticated') ? (
                     
                     <div style={{display: "flex"}}>
-                        <p style={{marginRight: "20px"}}> {localStorage.getItem("userLogin")} </p>
+                        <p style={{marginRight: "20px"}}> {!userInfo.loading && userInfo.success ? userInfo.data[0].first_name : 'Загрузка'} </p>
                             <ThemeProvider theme={theme}>
                                 <Button
                                     onClick={() => {

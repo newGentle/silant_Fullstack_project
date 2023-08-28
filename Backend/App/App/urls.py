@@ -39,7 +39,7 @@ urlpatterns = [
     path('', include('MainApp.urls')),
     path('', include('Handbook.urls')),
     # path('api/v1/', include('Handbook.urls')),
-    # path('api/v1/', include('Account.urls')),
+    path('api/v1/', include('Account.urls')),
     # re_path(r'^rest-auth', include('exarth_rest_auth.urls')),
     path('api/v1/token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/v1/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),

@@ -1,4 +1,6 @@
 */venv
+/__pycache__/
 Backend/App/.env
+
 
 /node_modules/

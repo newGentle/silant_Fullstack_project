@@ -1,13 +1,15 @@
-# from rest_framework import serializers
-# from .models import User, Users
+from rest_framework import serializers
+from .models import User
 
-# class UsersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Users
-#         fields = ['role',]
-
-# class UserSerializer(serializers.ModelSerializer):
-#     usersInfo = UsersSerializer(read_only = True)
-#     class Meta:
-#         model = User
-#         fields = ['id', 'username', 'first_name', 'usersInfo']
+        
+class UserSerializer(serializers.ModelSerializer):
+    # role = UsersSerializer(read_only = True)
+    role = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = User
+        fields = ['id', 'first_name', 'username', 'role']
+        
+    def get_role(self, obj):
+        return obj.users.get_role_display()
+        
