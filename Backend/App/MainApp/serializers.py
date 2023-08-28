@@ -37,7 +37,7 @@ class ModelOfSteeringAxleSerializer(serializers.ModelSerializer):
 class FirstNameSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name']
+        fields = ['id', 'first_name']
         
 
 class TypeOfMaintenanceSerializer(serializers.ModelSerializer):
@@ -79,7 +79,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'machine', 'supplyContract', 'dateOfShipment', \
-            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']        
+            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']
+        
 
         
 class MaintenanceSerializer(serializers.ModelSerializer):
@@ -103,3 +104,14 @@ class ComplaintsSerializer(serializers.ModelSerializer):
         fields = ['id', 'machine', 'dateOfFailure', 'operatingTime', 'nodeOfFailure', \
             'descriptionOfFailure', 'recoveryMethod', 'usedSpareParts', 'dateOfRecovery', \
                 'downtimeOfMachine', 'serviceCompany']
+
+
+class DetailedMachineSerilizer(serializers.ModelSerializer):
+    # complaints_machine = serializers.StringRelatedField(many = True)
+    # machine = serializers.StringRelatedField(many = True)
+    complaints_machine = ComplaintsSerializer(many=True, read_only=True)
+    machine = MaintenanceSerializer(many=True, read_only=True)
+    class Meta:
+        model = Machine
+        fields = ['complaints_machine', 'machine']
+        

@@ -4,9 +4,10 @@ from .views import *
 
 router = routers.SimpleRouter()
 router.register(r'modelOfEngine', ModelOfEngineViewSet, basename='modelOfEngine')
+router.register(r'modelOfTransmission', ModelOfTransmissionViewSet, basename='modelOfTransmission')
+router.register(r'modelOfMainAxle', ModelOfMainAxleViewSet, basename='modelOfMainAxle')
+router.register(r'modelOfSteeringAxle', ModelOfSteeringAxleViewSet, basename='modelOfSteeringAxle')
 
 urlpatterns = [
-    path('api/v1/handbook/', include(router.urls)),
-    path('engine/<int:pk>/', ModelOfEngineDetail.as_view(), name='engine'),
-    
+    path('', include(router.urls)),    
 ]

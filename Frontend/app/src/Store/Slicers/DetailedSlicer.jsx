@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 
-export const MaintenanceData = createAsyncThunk(
-    "maintenance/MaintenanceData",
-    async (accessToken, { rejectWithValue }) => {
+export const DetailedData = createAsyncThunk(
+    "detailed/DetailedData",
+    async (id, { rejectWithValue }) => {
         try {
-            
+            const accessToken = localStorage.getItem('accessToken');
             const header = {
                 headers: {
                     "Content-type": "application/json",
@@ -15,7 +15,7 @@ export const MaintenanceData = createAsyncThunk(
             };
 
             const {data} = await axios.get(
-                'http://127.0.0.1:8000/api/v1/maintenance/',
+                'http://127.0.0.1:8000/api/v1/detailed/' + id,
                 header
             );
          
@@ -39,24 +39,24 @@ const initialState = {
     status: null,
 };
 
-const MaintenanceSlicer = createSlice({
-    name: "maintenance",
+const DetailedSlicer = createSlice({
+    name: "detailed",
     initialState,
     
     extraReducers: (builder) => {
-        builder.addCase(MaintenanceData.fulfilled, (state, action) => {
+        builder.addCase(DetailedData.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'OK';
             state.loading = false;
             state.success = true;
         });
 
-        builder.addCase(MaintenanceData.pending, (state) => {
+        builder.addCase(DetailedData.pending, (state) => {
             state.loading = true;
             state.error = null;
         });
 
-        builder.addCase(MaintenanceData.rejected, (state, action) => {
+        builder.addCase(DetailedData.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
             state.status = "BAD";
@@ -64,4 +64,4 @@ const MaintenanceSlicer = createSlice({
     },
 });
 
-export default MaintenanceSlicer.reducer;
+export default DetailedSlicer.reducer;

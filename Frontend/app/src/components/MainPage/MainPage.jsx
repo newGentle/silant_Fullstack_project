@@ -1,5 +1,4 @@
 import * as React from "react";
-import "./MainPageTable.css";
 import { Unauthorized } from "./Unauthorized";
 import { Authorized } from "./Authorized";
 import { useSelector } from "react-redux";

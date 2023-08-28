@@ -1,9 +1,11 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import viewsets
-from .serializers import MachineSerializer, OrderSerializer, MaintenanceSerializer, ComplaintsSerializer
+from .serializers import MachineSerializer, OrderSerializer, MaintenanceSerializer, ComplaintsSerializer, DetailedMachineSerilizer
 from .models import Machine, Maintenance, Complaints, Order
 from django.views.generic import ListView
 from django.db.models import Q 
+
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -51,6 +53,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = OrderSerializer
     http_method_names = ('get', 'put')
+    
     
     def get_queryset(self):
         user = self.request.user
@@ -121,4 +124,12 @@ class MachineViewSet(viewsets.ModelViewSet):
     queryset = Machine.objects.all()
     http_method_names = ('get',)
     
+
+
+class DetailMaintenance(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    queryset = Machine.objects.all()
+    serializer_class = DetailedMachineSerilizer
+   
+        
     

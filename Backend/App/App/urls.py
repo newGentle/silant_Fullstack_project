@@ -36,8 +36,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('MainApp.urls')),
-    path('', include('Handbook.urls')),
+    path('api/v1/', include('MainApp.urls')),
+    path('api/v1/', include('Handbook.urls')),
     # path('api/v1/', include('Handbook.urls')),
     path('api/v1/', include('Account.urls')),
     # re_path(r'^rest-auth', include('exarth_rest_auth.urls')),

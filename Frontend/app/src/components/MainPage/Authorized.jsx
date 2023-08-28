@@ -1,82 +1,34 @@
 import * as React from "react";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
-import { Box, Tab, Tabs } from "@mui/material";
-import PropTypes from "prop-types";
-
-import { GenInfo } from "./Tabs/GenInfo";
-import { Maintenance } from "./Tabs/Maintenance";
-import { Complaints } from "./Tabs/Complaints";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MainPageTable } from "./MainPageTable/MainPageTable";
+import { ComplaintsData } from "../../Store/Slicers/ComplaintsSlicer";
+import { OrderData } from "../../Store/Slicers/OrderSlicer";
+import { MaintenanceData } from "../../Store/Slicers/MaintenanceSlicer";
 
 const Authorized = () => {
 
-    const user_role = useSelector((state) => state.user);
-    const [value, setValue] = React.useState(0);
+    
+    const dispatch = useDispatch();
+    const logged = useSelector((state) => state.user);
+    const complaints = useSelector((state) => state.complaints);
+    const order = useSelector((state) => state.order);
+    const maintenance = useSelector((state) => state.maintenance);
 
-    const tabChange = (e, newContent) => {
-        setValue(newContent);
-    };
-
-    function CustomTabPanel(props) {
-        const { children, value, index, ...other } = props;
-
-        return (
-            <div
-                role="tabpanel"
-                hidden={value !== index}
-                id={`simple-tabpanel-${index}`}
-                aria-labelledby={`simple-tab-${index}`}
-                {...other}
-            >
-                {value === index && (
-                    <Box sx={{ p: 3 }}>
-                        <div>{children}</div>
-                    </Box>
-                )}
-            </div>
-        );
-    }
-
-    CustomTabPanel.propTypes = {
-        children: PropTypes.node,
-        index: PropTypes.number.isRequired,
-        value: PropTypes.number.isRequired,
-    };
-
-    function a11yProps(index) {
-        return {
-            id: `simple-tab-${index}`,
-            "aria-controls": `simple-tabpanel-${index}`,
-        };
-    }
+    React.useEffect(() => {
+        if (logged.success || localStorage.getItem("accessToken")) {
+            dispatch(ComplaintsData(localStorage.getItem("accessToken")));
+            dispatch(OrderData(localStorage.getItem("accessToken")));
+            dispatch(MaintenanceData(localStorage.getItem("accessToken")));
+        }
+    }, [dispatch, logged]);
 
     return (
         <CustomContainer>
-            <h1 style={{textAlign: "center"}}>{user_role.success ? user_role.data[0].role : 'Загрузка...'} </h1>
-            <Box sx={{ width: "100%" }}>
-                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                    <Tabs
-                        variant="fullWidth"
-                        value={value}
-                        onChange={tabChange}
-                    >
-                        <Tab label="Общая Информация" {...a11yProps(0)} />
-                        <Tab label="ТО" {...a11yProps(1)} />
-                        <Tab label="Рекламация" {...a11yProps(2)} />
-                    </Tabs>
-                </Box>
-                <CustomTabPanel value={value} index={0}>
-                    <GenInfo />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
-                    <Maintenance />
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <Complaints />
-                </CustomTabPanel>
-            </Box>
-
-            
+            <h1 style={{textAlign: "center"}}>{logged.success ? logged.data[0].role : 'Загрузка...'} </h1>
+            <h2 style={{textAlign: "center"}}>Информация о комплектации и технических характеристиках Вашей техники</h2>
+            <p style={{textAlign: 'center', marginTop: '40px'}}>Таблица с данными (выдача результата)</p>
+            <MainPageTable order={order} complaints={complaints} maintenance={maintenance} />
         </CustomContainer>
     );
 };

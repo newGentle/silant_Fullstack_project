@@ -1,19 +1,9 @@
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { ComplaintsData } from "../../../Store/Slicers/ComplaintsSlicer";
 import { Table } from "@mui/material";
 
-const Complaints = () => {
-    const dispatch = useDispatch();
-    const data = useSelector((state) => state.complaints);
-    const logged = useSelector((state) => state.user);
-
-    React.useEffect(() => {
-        if (logged.success || localStorage.getItem("accessToken")) {
-            dispatch(ComplaintsData(localStorage.getItem("accessToken")));
-        }
-    }, [dispatch, logged]);
-
+const Complaints = (props) => {
+    const {complaints} = props
+    
     return (
         <div style={{ overflowX: "scroll" }}>
             <Table>
@@ -30,12 +20,12 @@ const Complaints = () => {
                         <th>Дата восстановления</th>
                         <th>Время простоя техники</th>
                     </tr>
-                    {data.loading || !logged.success || !data.success ? (
+                    {complaints.machine.loading || !complaints.machine.success ? (
                         <tr>
                             <td>Загрузка</td>
                         </tr>
                     ) : (
-                        data.data.map((value, idx) => (
+                        complaints.machine.data.complaints_machine.map((value, idx) => (
                             <tr key={value.id}>
                                 <td>{idx + 1}</td>
                                 <td>{value.machine.factoryNumberOfMachine}</td>

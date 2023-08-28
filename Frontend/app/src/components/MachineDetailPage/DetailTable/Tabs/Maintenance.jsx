@@ -1,19 +1,9 @@
 import { Table } from "@mui/material";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { MaintenanceData } from "../../../Store/Slicers/MaintenanceSlicer";
-const Maintenance = () => {
-    const dispatch = useDispatch();
-    const data = useSelector((state) => state.maintenance);
-    const logged = useSelector((state) => state.user);
 
-    React.useEffect(() => {
-        if (logged.success || localStorage.getItem("accessToken")) {
-            dispatch(MaintenanceData(localStorage.getItem("accessToken")));
-        }
-    }, [dispatch, logged]);
-
-    console.log(data);
+const Maintenance = (props) => {
+    const {maintenance} = props
+    
     return (
         <div style={{ overflowX: "scroll" }}>
             <Table>
@@ -28,12 +18,12 @@ const Maintenance = () => {
                         <th>дата заказ-наряда</th>
                         <th>Организация проводившая ТО</th>
                     </tr>
-                    {data.loading || !logged.success || !data.success ? (
+                    {maintenance.machine.loading || !maintenance.machine.success ? (
                         <tr>
                             <td>Загрузка</td>
                         </tr>
                     ) : (
-                        data.data.map((value, idx) => (
+                        maintenance.machine.data.machine.map((value, idx) => (
                             <tr key={value.id}>
                                 <td>{idx + 1}</td>
                                 <td>{value.machine.factoryNumberOfMachine}</td>

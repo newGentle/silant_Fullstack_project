@@ -11,12 +11,13 @@ const Header = () => {
     const dispatch = useDispatch();
     
     const userInfo = useSelector((state) => state.user);
-    
+    const logged = useSelector((state) => state.login);
+
     React.useEffect(() => {
-        if (localStorage.getItem('accessToken') || userInfo.success){
+        if (logged.is_Auth || !userInfo.success){
             dispatch(UserData(localStorage.getItem('accessToken')));
         }
-    }, [dispatch, userInfo.success]);
+    }, [dispatch, userInfo.success, logged]);
 
     
     return (
