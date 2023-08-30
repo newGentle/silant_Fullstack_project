@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Link, Table } from "@mui/material";
+import { MaterialReactTable } from 'material-react-table';
 
 const GenInfo = (props) => {
     const {machine} = props;
- 
+    
     return (
+        <>
         <div style={{ overflowX: "scroll" }}>
             <Table>
                 <tbody>
@@ -116,6 +118,8 @@ const GenInfo = (props) => {
                 </tbody>
             </Table>
         </div>
+        <MaterialReactTable data={machine?.data ?? []}/>
+        </>
     );
 };
 

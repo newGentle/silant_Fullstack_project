@@ -18,7 +18,7 @@ const Header = () => {
             dispatch(UserData(localStorage.getItem('accessToken')));
         }
 
-    }, [dispatch, userInfo.success, navigate, logged]);
+    }, [dispatch, userInfo.success, logged]);
     
     
     return (
