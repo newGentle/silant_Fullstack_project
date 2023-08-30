@@ -33,7 +33,7 @@ def addToGroup(sender, instance=None, created=False, **kwargs):
             group.permissions.add(Permission.objects.get(id=38))
             group.permissions.add(Permission.objects.get(id=40))
             
-        user = User.objects.get(username = instance)
+        user = User.objects.get(pk = instance.user_id)
         # Token.objects.get_or_create(user=user)
         
         user.groups.add(group)

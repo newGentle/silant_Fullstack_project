@@ -64,23 +64,15 @@ class MachineSerializer(serializers.ModelSerializer):
     modelOfTransmission = ModelOfTransmissionSerializer(read_only=True)
     modelOfMainAxle = ModelOfMainAxleSerializer(read_only=True)
     modelOfSteeringAxle = ModelOfSteeringAxleSerializer(read_only=True)
+    client = FirstNameSerializer(read_only = True)
+    serviceCompany = FirstNameSerializer(read_only = True)
     class Meta:
         model = Machine
         fields = ['factoryNumberOfMachine', 'modelOfMachine', 'modelOfEngine', \
                 'factoryNumberOfEngine', 'modelOfTransmission', 'factoryNumberOfTransmission', \
                 'modelOfMainAxle', 'factoryNumberOfMainAxle', 'modelOfSteeringAxle', \
-                'factoryNumberOfSteeringAxle']        
-        
-        
-class OrderSerializer(serializers.ModelSerializer):
-    machine = MachineSerializer(read_only = True)
-    client = FirstNameSerializer(read_only = True)
-    serviceCompany = FirstNameSerializer(read_only = True)
-    class Meta:
-        model = Order
-        fields = ['id', 'machine', 'supplyContract', 'dateOfShipment', \
-            'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']
-        
+                'factoryNumberOfSteeringAxle', 'supplyContract', 'dateOfShipment', \
+                'consumer', 'operationAddress', 'additionalOptions', 'client', 'serviceCompany']        
 
         
 class MaintenanceSerializer(serializers.ModelSerializer):

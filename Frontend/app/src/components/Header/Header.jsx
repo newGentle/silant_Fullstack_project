@@ -17,8 +17,9 @@ const Header = () => {
         if (logged.is_Auth || !userInfo.success){
             dispatch(UserData(localStorage.getItem('accessToken')));
         }
-    }, [dispatch, userInfo.success, logged]);
 
+    }, [dispatch, userInfo.success, navigate, logged]);
+    
     
     return (
         <CustomContainer style={{ borderBottom: "1px solid var(--bg_color)" }}>

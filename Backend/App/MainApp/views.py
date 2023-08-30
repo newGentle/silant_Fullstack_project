@@ -1,7 +1,7 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import viewsets
-from .serializers import MachineSerializer, OrderSerializer, MaintenanceSerializer, ComplaintsSerializer, DetailedMachineSerilizer
-from .models import Machine, Maintenance, Complaints, Order
+from .serializers import MachineSerializer, MaintenanceSerializer, ComplaintsSerializer, DetailedMachineSerilizer
+from .models import Machine, Maintenance, Complaints
 from django.views.generic import ListView
 from django.db.models import Q 
 
@@ -9,49 +9,48 @@ from rest_framework.response import Response
 
 # Create your views here.
 
-class MachinesList(ListView):
-    model = Machine
-    template_name = 'main_page.html'
-    context_object_name = 'machines'
+# class MachinesList(ListView):
+#     model = Machine
+#     template_name = 'main_page.html'
+#     context_object_name = 'machines'
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        user = self.request.user
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         user = self.request.user
         
-        if user.is_anonymous:
-            return context
+#         if user.is_anonymous:
+#             return context
                    
-        if user.is_superuser or user.users.role == 'MR':
-            context['machines'] = Machine.objects.all()
-            context['maintenances'] = Maintenance.objects.all()
-            context['complaints'] = Complaints.objects.all()
-            return context
+#         if user.is_superuser or user.users.role == 'MR':
+#             context['machines'] = Machine.objects.all()
+#             context['maintenances'] = Maintenance.objects.all()
+#             context['complaints'] = Complaints.objects.all()
+#             return context
 
-        if user.users.role == 'CR':
-            order = Order.objects.filter(client = user).values_list('machine', flat=True)
-            machines = Machine.objects.filter(factoryNumberOfMachine__in = order)
-            maintenance = Maintenance.objects.filter(machine__in = order)
-            complaints = Complaints.objects.filter(machine__in = order)
-            context['machines'] = machines
-            context['maintenances'] = maintenance
-            context['complaints'] = complaints
-            return context
+#         if user.users.role == 'CR':
+#             machines = Machine.objects.filter(client = user)
+#             maintenance = Maintenance.objects.filter(machine__in = machines)
+#             complaints = Complaints.objects.filter(machine__in = machines)
+#             context['machines'] = machines
+#             context['maintenances'] = maintenance
+#             context['complaints'] = complaints
+#             return context
         
-        if user.users.role == 'SC':
-            maintenanceOfMachines = Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user)).values_list('machine_id', flat=True)
-            maintenance = Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user))
-            order = Order.objects.filter(serviceCompany = user)
-            machines = Machine.objects.filter(factoryNumberOfMachine__in = maintenanceOfMachines)
-            complaints = Complaints.objects.filter(machine__in = machines)
-            context['maintenances'] = maintenance
-            context['machines'] = machines
-            context['complaints'] = complaints
-            return context
+#         if user.users.role == 'SC':
+#             maintenanceOfMachines = Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user)).values_list('machine_id', flat=True)
+#             maintenance = Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user))
+#             order = Order.objects.filter(serviceCompany = user)
+#             machines = Machine.objects.filter(factoryNumberOfMachine__in = maintenanceOfMachines)
+#             complaints = Complaints.objects.filter(machine__in = machines)
+#             context['maintenances'] = maintenance
+#             context['machines'] = machines
+#             context['complaints'] = complaints
+#             return context
         
 
-class OrderViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = OrderSerializer
+class MachineViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    serializer_class = MachineSerializer
     http_method_names = ('get', 'put')
     
     
@@ -59,16 +58,16 @@ class OrderViewSet(viewsets.ModelViewSet):
         user = self.request.user
         
         if user.is_anonymous:
-            return ''
-            
+            return Machine.objects.all()
+        
         if user.is_superuser or user.users.role == 'MR':
-            return Order.objects.all()
+            return Machine.objects.all()
         
         if user.users.role == 'CR':
-            return Order.objects.filter(client = user)
+            return Machine.objects.filter(client = user)
         
         if user.users.role == 'SC':
-            return Order.objects.filter(serviceCompany = user)
+            return Machine.objects.filter(serviceCompany = user)
 
 
 class MaintenanceViewSet(viewsets.ModelViewSet):
@@ -86,8 +85,8 @@ class MaintenanceViewSet(viewsets.ModelViewSet):
             return Maintenance.objects.all()
         
         if user.users.role == 'CR':
-            order = Order.objects.filter(client = user).values_list('machine', flat=True)
-            return Maintenance.objects.filter(machine__in = order)
+            machine = Machine.objects.filter(client = user)
+            return Maintenance.objects.filter(machine__in = machine)
         
         if user.users.role == 'SC':
             return Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user))
@@ -108,21 +107,21 @@ class ComplaintsViewSet(viewsets.ModelViewSet):
             return Complaints.objects.all()
         
         if user.users.role == 'CR':
-            order = Order.objects.filter(client = user).values_list('machine', flat=True)
-            return Complaints.objects.filter(machine__in = order)
+            machine = Machine.objects.filter(client = user)
+            return Complaints.objects.filter(machine__in = machine)
         
         if user.users.role == 'SC':
             maintenanceOfMachines = Maintenance.objects.filter(Q(serviceCompany = user) | Q(maintenanceServiceCompany = user)).values_list('machine_id', flat=True)
-            order = Order.objects.filter(serviceCompany = user)
+            machine = Machine.objects.filter(serviceCompany = user)
             machines = Machine.objects.filter(factoryNumberOfMachine__in = maintenanceOfMachines)
             return Complaints.objects.filter(machine__in = machines)
  
         
-class MachineViewSet(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-    serializer_class = MachineSerializer
-    queryset = Machine.objects.all()
-    http_method_names = ('get',)
+# class MachineViewSet(viewsets.ModelViewSet):
+#     permission_classes = (IsAuthenticatedOrReadOnly,)
+#     serializer_class = MachineSerializer
+#     queryset = Machine.objects.all()
+#     http_method_names = ('get',)
     
 
 

@@ -1,10 +1,10 @@
 from django.urls import path, include
 from rest_framework import routers
-from .views import MachinesList, MachineViewSet, OrderViewSet, MaintenanceViewSet, ComplaintsViewSet, DetailMaintenance
+from .views import MachineViewSet, MaintenanceViewSet, ComplaintsViewSet, DetailMaintenance
 
 router = routers.SimpleRouter()
 router.register(r'machine', MachineViewSet, basename='machine')
-router.register(r'order', OrderViewSet, basename='order')
+# router.register(r'order', OrderViewSet, basename='order')
 router.register(r'maintenance', MaintenanceViewSet, basename='maintenance')
 router.register(r'complaints', ComplaintsViewSet, basename='complaints')
 router.register(r'detailed', DetailMaintenance, basename='detailed')

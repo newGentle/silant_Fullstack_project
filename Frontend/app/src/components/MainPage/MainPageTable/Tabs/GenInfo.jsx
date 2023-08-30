@@ -2,8 +2,8 @@ import * as React from "react";
 import { Link, Table } from "@mui/material";
 
 const GenInfo = (props) => {
-    const { order } = props;
-
+    const {machine} = props;
+ 
     return (
         <div style={{ overflowX: "scroll" }}>
             <Table>
@@ -30,64 +30,64 @@ const GenInfo = (props) => {
                         <th>Комплектация (доп. опции)</th>
                         <th>Сервисная компания</th>
                     </tr>
-                    {order.loading || !order.success ? (
+                    {machine.loading || !machine.success ? (
                         <tr>
                             <td>Загрузка</td>
                         </tr>
                     ) : (
-                        order.data.map((value, idx) => (
-                            <tr key={value.id}>
+                        machine.data.map((value, idx) => (
+                            <tr key={value.factoryNumberOfMachine}>
                                 <td>{idx + 1}</td>
                                 <td>
                                     <Link
-                                        href={`machine/${value.machine.factoryNumberOfMachine}`}
+                                        href={`machine/${value.factoryNumberOfMachine}`}
                                     >
-                                        {value.machine.modelOfMachine.title}
+                                        {value.modelOfMachine.title}
                                     </Link>
                                 </td>
-                                <td>{value.machine.factoryNumberOfMachine}</td>
+                                <td>{value.factoryNumberOfMachine}</td>
 
                                 <td>
                                     <Link
-                                        href={`engine/${value.machine.modelOfEngine.id}`}
+                                        href={`engine/${value.modelOfEngine.id}`}
                                     >
-                                        {value.machine.modelOfEngine.title}
+                                        {value.modelOfEngine.title}
                                     </Link>
                                 </td>
-                                <td>{value.machine.factoryNumberOfEngine}</td>
+                                <td>{value.factoryNumberOfEngine}</td>
                                 <td>
                                     <Link
-                                        href={`transmission/${value.machine.modelOfTransmission.id}`}
+                                        href={`transmission/${value.modelOfTransmission.id}`}
                                     >
                                         {
-                                            value.machine.modelOfTransmission
+                                            value.modelOfTransmission
                                                 .title
                                         }
                                     </Link>
                                 </td>
                                 <td>
-                                    {value.machine.factoryNumberOfTransmission}
+                                    {value.factoryNumberOfTransmission}
                                 </td>
                                 <td>
                                     <Link
-                                        href={`mainaxle/${value.machine.modelOfMainAxle.id}`}
+                                        href={`mainaxle/${value.modelOfMainAxle.id}`}
                                     >
-                                        {value.machine.modelOfMainAxle.title}
+                                        {value.modelOfMainAxle.title}
                                     </Link>
                                 </td>
-                                <td>{value.machine.factoryNumberOfMainAxle}</td>
+                                <td>{value.factoryNumberOfMainAxle}</td>
                                 <td>
                                     <Link
-                                        href={`steeringaxle/${value.machine.modelOfSteeringAxle.id}`}
+                                        href={`steeringaxle/${value.modelOfSteeringAxle.id}`}
                                     >
                                         {
-                                            value.machine.modelOfSteeringAxle
+                                            value.modelOfSteeringAxle
                                                 .title
                                         }
                                     </Link>
                                 </td>
                                 <td>
-                                    {value.machine.factoryNumberOfSteeringAxle}
+                                    {value.factoryNumberOfSteeringAxle}
                                 </td>
                                 <td>{value.dateOfShipment}</td>
                                 <td>

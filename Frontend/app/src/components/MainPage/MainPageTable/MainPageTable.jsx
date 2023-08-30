@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import "./MainPageTable.css";
 
 const MainPageTable = (props) => {
-    const { complaints, maintenance, order } = props
+    const { complaints, maintenance, machine } = props
     const [value, setValue] = React.useState(0);
 
     const tabChange = (e, newContent) => {
@@ -56,7 +56,7 @@ const MainPageTable = (props) => {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <GenInfo order={order} />
+                <GenInfo machine={machine} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
                 <Maintenance maintenance={maintenance} />

@@ -13,7 +13,7 @@ const LoginPage = () => {
     const data = useSelector((state) => state.login);
 
     useEffect(() => {
-        if (data.is_Auth) {
+        if (data.is_Auth || localStorage.getItem('Authenticated')) {
             navigate("/");
         }
     }, [navigate, data.is_Auth]);

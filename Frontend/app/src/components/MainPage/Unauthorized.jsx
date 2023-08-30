@@ -3,7 +3,7 @@ import { CustomContainer } from "../CustomComponents/CustomContainer/CustomConta
 import { Button, Input, Table, ThemeProvider } from "@mui/material";
 import { theme } from "../../Theme/Theme";
 import { useDispatch, useSelector } from "react-redux";
-import { MachineData } from "../../Store/Slicers/MachineSlicer";
+import { oneMachineData } from "../../Store/Slicers/MachineSlicer";
 
 function Unauthorized() {
     let status = true;
@@ -14,10 +14,10 @@ function Unauthorized() {
 
     const submit = () => {
         const machine = document.getElementById("factoryNumberOfMachine").value;
-        dispatch(MachineData(machine));
+        dispatch(oneMachineData(machine));
     };
-
-    if (data.data === null) {
+    
+    if (data.oneData === null) {
         status = false;
     }
     
@@ -80,16 +80,16 @@ function Unauthorized() {
                             </tr>
                         ) : (
                             <tr>
-                                <td>{data.data.modelOfMachine.title}</td>
-                                <td>{data.data.factoryNumberOfMachine}</td>
-                                <td>{data.data.modelOfEngine.title}</td>
-                                <td>{data.data.factoryNumberOfEngine}</td>
-                                <td>{data.data.modelOfTransmission.title}</td>
-                                <td>{data.data.factoryNumberOfTransmission}</td>
-                                <td>{data.data.modelOfMainAxle.title}</td>
-                                <td>{data.data.factoryNumberOfMainAxle}</td>
-                                <td>{data.data.modelOfSteeringAxle.title}</td>
-                                <td>{data.data.factoryNumberOfSteeringAxle}</td>
+                                <td>{data.oneData.modelOfMachine.title}</td>
+                                <td>{data.oneData.factoryNumberOfMachine}</td>
+                                <td>{data.oneData.modelOfEngine.title}</td>
+                                <td>{data.oneData.factoryNumberOfEngine}</td>
+                                <td>{data.oneData.modelOfTransmission.title}</td>
+                                <td>{data.oneData.factoryNumberOfTransmission}</td>
+                                <td>{data.oneData.modelOfMainAxle.title}</td>
+                                <td>{data.oneData.factoryNumberOfMainAxle}</td>
+                                <td>{data.oneData.modelOfSteeringAxle.title}</td>
+                                <td>{data.oneData.factoryNumberOfSteeringAxle}</td>
                             </tr>
                         )}
                     </tbody>

@@ -14,15 +14,18 @@ export const UserLogin = createAsyncThunk(
         try {
             const { data } = await axios.post(
                 'http://127.0.0.1:8000/api/v1/token',
-                { username, password},
+                {username, password},
                 header
             );
             localStorage.setItem("userLogin", username);
             localStorage.setItem("accessToken", data.access);
             localStorage.setItem("Authenticated", true);
+            
             return data;
         }
+
         catch (error) {
+            
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message);
             } else {

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../../Store/Slicers/AuthSlicer";
 import { useNavigate } from "react-router-dom";
 
-function LogoutPage() {
+const LogoutPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     

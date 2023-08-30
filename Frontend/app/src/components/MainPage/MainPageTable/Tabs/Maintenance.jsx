@@ -4,7 +4,7 @@ import * as React from "react";
 
 const Maintenance = (props) => {
     const { maintenance } = props;
-
+    
     return (
         <div style={{ overflowX: "scroll" }}>
             <Table>
