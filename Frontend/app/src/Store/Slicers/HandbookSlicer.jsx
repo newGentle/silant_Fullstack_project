@@ -39,13 +39,13 @@ const initialState = {
     status: null,
 };
 
-const EngineSlicer = createSlice({
+const HandbookSlicer = createSlice({
     name: "engine",
     initialState,
     
     extraReducers: (builder) => {
         builder.addCase(EngineData.fulfilled, (state, action) => {
-            state.data = action.payload;
+            state.engine = action.payload;
             state.status = 'OK';
             state.loading = false;
             state.success = true;
@@ -64,4 +64,4 @@ const EngineSlicer = createSlice({
     },
 });
 
-export default EngineSlicer.reducer;
+export default HandbookSlicer.reducer;

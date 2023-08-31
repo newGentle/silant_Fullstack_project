@@ -52,16 +52,6 @@ const Header = () => {
                         <ThemeProvider theme={theme}>
                             <Button
                                 onClick={() => {
-                                    navigate("/datainsert");
-                                }}
-                            >
-                                Добавить данные
-                            </Button>
-                        </ThemeProvider>
-
-                        <ThemeProvider theme={theme}>
-                            <Button
-                                onClick={() => {
                                     navigate("/logout");
                                 }}
                             >

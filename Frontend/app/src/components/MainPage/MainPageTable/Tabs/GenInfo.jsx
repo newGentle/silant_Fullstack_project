@@ -1,19 +1,20 @@
 import * as React from "react";
-import { Link, Table } from "@mui/material";
+import { Button, Link, Table } from "@mui/material";
 import { GenInfoFilters } from "../Filters/GenInfoFilters";
+import { useNavigate } from "react-router-dom";
 
 const GenInfo = (props) => {
     const { machine } = props;
-
+    const navigate = useNavigate();
     return (
         <>
             <GenInfoFilters />
-
+            <Button onClick={() => {navigate('/datainsert/machine/')}}>Добавить новую запись</Button>
             <div style={{ overflowX: "scroll" }}>
                 <Table>
                     <tbody>
                         <tr>
-                            <th colSpan="16">ОБЩИЕ СВЕДЕНИЯ</th>
+                            <th colSpan="17">ОБЩИЕ СВЕДЕНИЯ</th>
                         </tr>
 
                         <tr>
@@ -98,8 +99,8 @@ const GenInfo = (props) => {
                                     <td style={{ textAlign: "left" }}>
                                         {value.additionalOptions
                                             .split(";")
-                                            .map((item) => {
-                                                return <div>{item}</div>;
+                                            .map((item, i) => {
+                                                return <div key={i}>{item}</div>;
                                             })}
                                     </td>
                                     <td>
@@ -115,22 +116,6 @@ const GenInfo = (props) => {
                     </tbody>
                 </Table>
             </div>
-            {/* <MaterialReactTable
-                columns={columns}
-                data={data}
-                enableRowNumbers
-                // enableColumnFilterModes
-                enableColumnActions={false}
-                enablePagination={false}
-                enableSorting={false}
-                enableBottomToolbar={false}
-                enableTopToolbar={false}
-                muiTableBodyCellProps={({row, column, cell}) => ({
-                    onClick: (event) => {
-                        console.log(cell.row.original.modelOfMachine );
-                    }
-                })}
-            /> */}
         </>
     );
 };

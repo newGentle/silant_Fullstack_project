@@ -5,6 +5,7 @@ import UserInfoSlicer from './Slicers/UserInfoSlicer';
 import MaintenanceSlicer from './Slicers/MaintenanceSlicer';
 import ComplaintsSlicer from './Slicers/ComplaintsSlicer';
 import DetailedSlicer from './Slicers/DetailedSlicer';
+import HandbookSlicer from './Slicers/HandbookSlicer';
 
 export default configureStore({
     reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
         complaints: ComplaintsSlicer,
         user: UserInfoSlicer,
         detailed: DetailedSlicer,
+        handbook: HandbookSlicer
     }
 })

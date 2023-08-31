@@ -17,18 +17,18 @@ function App() {
           <Route path='/' element={<MainPage />} />
           <Route path='/login/' element={<LoginPage />} />
           <Route path='/logout/' element={<LogoutPage />} />
-          <Route path='/datainsert/' element={<DataInsertPage />} />
-          <Route path='/machine/:id' element={<MachineDetailPage />} />
-          <Route path='/engine/:engine' element={<Handbook />} />
-          <Route path='/transmission/:transmission' element={<Handbook />} />
-          <Route path='/mainaxle/:mainaxle' element={<Handbook />} />
-          <Route path='/steeringaxle/:steeringaxle' element={<Handbook />} />
-          <Route path='/client/:client' element={<Handbook />} />
-          <Route path='/consumer/:consumer' element={<Handbook />} />
-          <Route path='/servicecompany/:servicecompany' element={<Handbook />} />
-          <Route path='/maintenance/:maintenance' element={<Handbook />} />
-          <Route path='/nodeoffailure/:nodeoffailure' element={<Handbook />} />
-          <Route path='/recoverymethod/:recoverymethod' element={<Handbook />} />
+          <Route path='/datainsert/:type/' element={<DataInsertPage />} />
+          <Route path='/machine/:id/' element={<MachineDetailPage />} />
+          <Route path='/engine/:engine/' element={<Handbook />} />
+          <Route path='/transmission/:transmission/' element={<Handbook />} />
+          <Route path='/mainaxle/:mainaxle/' element={<Handbook />} />
+          <Route path='/steeringaxle/:steeringaxle/' element={<Handbook />} />
+          <Route path='/client/:client/' element={<Handbook />} />
+          <Route path='/consumer/:consumer/' element={<Handbook />} />
+          <Route path='/servicecompany/:servicecompany/' element={<Handbook />} />
+          <Route path='/maintenance/:maintenance/' element={<Handbook />} />
+          <Route path='/nodeoffailure/:nodeoffailure/' element={<Handbook />} />
+          <Route path='/recoverymethod/:recoverymethod/' element={<Handbook />} />
         </Routes>
       <Footer />
     </div>
