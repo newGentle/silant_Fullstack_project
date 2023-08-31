@@ -9,18 +9,16 @@ import { UserData } from "../../Store/Slicers/UserInfoSlicer";
 const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const userInfo = useSelector((state) => state.user);
     const logged = useSelector((state) => state.login);
 
     React.useEffect(() => {
-        if (logged.is_Auth || !userInfo.success){
-            dispatch(UserData(localStorage.getItem('accessToken')));
+        if (logged.is_Auth || !userInfo.success) {
+            dispatch(UserData(localStorage.getItem("accessToken")));
         }
-
     }, [dispatch, userInfo.success, logged]);
-    
-    
+
     return (
         <CustomContainer style={{ borderBottom: "1px solid var(--bg_color)" }}>
             <div
@@ -43,21 +41,34 @@ const Header = () => {
                 <div>
                     <p>+7-8352-20-12-09, telegram</p>
                 </div>
-                {localStorage.getItem('Authenticated') ? (
-                    
-                    <div style={{display: "flex"}}>
-                        <p style={{marginRight: "20px"}}> {!userInfo.loading && userInfo.success ? userInfo.data[0].first_name : 'Загрузка'} </p>
-                            <ThemeProvider theme={theme}>
-                                <Button
-                                    onClick={() => {
-                                        navigate("/logout");
-                                    }}
-                                >
-                                    Выйти
-                                </Button>
-                            </ThemeProvider>
-                        </div>
-                    
+                {localStorage.getItem("Authenticated") ? (
+                    <div style={{ display: "flex", columnGap: '20px' }}>
+                        <p style={{fontSize: '18px'}}>
+                            {!userInfo.loading && userInfo.success
+                                ? userInfo.data[0].first_name
+                                : "Загрузка"}{" "}
+                        </p>
+
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                onClick={() => {
+                                    navigate("/datainsert");
+                                }}
+                            >
+                                Добавить данные
+                            </Button>
+                        </ThemeProvider>
+
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                onClick={() => {
+                                    navigate("/logout");
+                                }}
+                            >
+                                Выйти
+                            </Button>
+                        </ThemeProvider>
+                    </div>
                 ) : (
                     <div>
                         <ThemeProvider theme={theme}>

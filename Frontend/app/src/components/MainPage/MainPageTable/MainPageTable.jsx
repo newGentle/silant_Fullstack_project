@@ -26,7 +26,7 @@ const MainPageTable = (props) => {
                 {...other}
             >
                 {value === index && (
-                    <Box sx={{ p: 3 }}>
+                    <Box sx={{ padding: '40px 0' }}>
                         <div>{children}</div>
                     </Box>
                 )}
@@ -49,10 +49,10 @@ const MainPageTable = (props) => {
     return (
         <Box sx={{ width: "100%" }}>
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs variant="fullWidth" value={value} onChange={tabChange}>
-                    <Tab label="Общая Информация" {...a11yProps(0)} />
-                    <Tab label="ТО" {...a11yProps(1)} />
-                    <Tab label="Рекламация" {...a11yProps(2)} />
+                <Tabs variant="fullWidth" value={value} onChange={tabChange} >
+                    <Tab label="Общая Информация" {...a11yProps(0)} sx={{color: 'var(--main_color)'}} />
+                    <Tab label="ТО" {...a11yProps(1)} sx={{color: 'var(--main_color)'}} />
+                    <Tab label="Рекламация" {...a11yProps(2)} sx={{color: 'var(--main_color)'}} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>

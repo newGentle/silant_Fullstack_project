@@ -1,17 +1,21 @@
 import { Link, Table } from "@mui/material";
 import * as React from "react";
+import { MaintenanceFilters } from "../Filters/MaintenanceFilters";
 
 
 const Maintenance = (props) => {
     const { maintenance } = props;
     
     return (
+        <>
+        <MaintenanceFilters />
+
         <div style={{ overflowX: "scroll" }}>
             <Table>
                 <tbody>
                     <tr>
                         <th>№ п/п</th>
-                        <th>Зав. № машины</th>
+                        <th>Зав. № техники</th>
                         <th>Вид ТО</th>
                         <th>Дата проведения ТО</th>
                         <th>Наработка, м/час</th>
@@ -55,6 +59,7 @@ const Maintenance = (props) => {
                 </tbody>
             </Table>
         </div>
+        </>
     );
 };
 

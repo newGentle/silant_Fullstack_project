@@ -7,6 +7,7 @@ import { LoginPage } from './components/LoginPage/LoginPage';
 import { LogoutPage } from './components/LogoutPage/LogoutPage';
 import { MachineDetailPage } from './components/MachineDetailPage/MachineDetailPage';
 import { Handbook } from './components/Handbook/Handbook';
+import { DataInsertPage } from './components/DataInsertPage/DataInsertPage';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path='/' element={<MainPage />} />
           <Route path='/login/' element={<LoginPage />} />
           <Route path='/logout/' element={<LogoutPage />} />
+          <Route path='/datainsert/' element={<DataInsertPage />} />
           <Route path='/machine/:id' element={<MachineDetailPage />} />
           <Route path='/engine/:engine' element={<Handbook />} />
           <Route path='/transmission/:transmission' element={<Handbook />} />
