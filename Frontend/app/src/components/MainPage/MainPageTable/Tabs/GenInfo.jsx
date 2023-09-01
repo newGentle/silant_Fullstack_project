@@ -1,15 +1,35 @@
 import * as React from "react";
-import { Button, Link, Table } from "@mui/material";
+import { Button, Link, Table, ThemeProvider } from "@mui/material";
 import { GenInfoFilters } from "../Filters/GenInfoFilters";
 import { useNavigate } from "react-router-dom";
+import { theme } from "../../../../Theme/Theme";
 
 const GenInfo = (props) => {
-    const { machine } = props;
+    const { machine, user } = props;
     const navigate = useNavigate();
+    
     return (
         <>
+            {user.success ? (
+                user.data[0].role === "Менеджер" ? (
+                    <ThemeProvider theme={theme}>
+                        <Button
+                            style={{ marginBottom: "20px" }}
+                            onClick={() => {
+                                navigate("/datainsert/machine/");
+                            }}
+                        >
+                            Добавить новую запись
+                        </Button>
+                    </ThemeProvider>
+                ) : (
+                    <></>
+                )
+            ) : (
+                <></>
+            )}
+
             <GenInfoFilters />
-            <Button onClick={() => {navigate('/datainsert/machine/')}}>Добавить новую запись</Button>
             <div style={{ overflowX: "scroll" }}>
                 <Table>
                     <tbody>
@@ -100,7 +120,9 @@ const GenInfo = (props) => {
                                         {value.additionalOptions
                                             .split(";")
                                             .map((item, i) => {
-                                                return <div key={i}>{item}</div>;
+                                                return (
+                                                    <div key={i}>{item}</div>
+                                                );
                                             })}
                                     </td>
                                     <td>

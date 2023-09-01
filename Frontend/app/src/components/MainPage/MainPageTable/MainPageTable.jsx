@@ -7,9 +7,8 @@ import PropTypes from "prop-types";
 import "./MainPageTable.css";
 
 const MainPageTable = (props) => {
-    const { complaints, maintenance, machine } = props
+    const { complaints, maintenance, machine, user } = props
     const [value, setValue] = React.useState(0);
-
     const tabChange = (e, newContent) => {
         setValue(newContent);
     };
@@ -26,7 +25,7 @@ const MainPageTable = (props) => {
                 {...other}
             >
                 {value === index && (
-                    <Box sx={{ padding: '40px 0' }}>
+                    <Box sx={{ padding: '40px 0 0' }}>
                         <div>{children}</div>
                     </Box>
                 )}
@@ -56,13 +55,13 @@ const MainPageTable = (props) => {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <GenInfo machine={machine} />
+                <GenInfo machine={machine} user={user} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <Maintenance maintenance={maintenance} />
+                <Maintenance maintenance={maintenance} user={user} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                <Complaints complaints={complaints} />
+                <Complaints complaints={complaints} user={user} />
             </CustomTabPanel>
         </Box>
     );

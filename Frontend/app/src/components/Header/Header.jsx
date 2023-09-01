@@ -20,7 +20,7 @@ const Header = () => {
     }, [dispatch, userInfo.success, logged]);
 
     return (
-        <CustomContainer style={{ borderBottom: "1px solid var(--bg_color)" }}>
+        <CustomContainer style={{backgroundColor: "var(--bg_color)" }}>
             <div
                 style={{
                     display: "flex",
@@ -42,7 +42,7 @@ const Header = () => {
                     <p>+7-8352-20-12-09, telegram</p>
                 </div>
                 {localStorage.getItem("Authenticated") ? (
-                    <div style={{ display: "flex", columnGap: '20px' }}>
+                    <div style={{ display: "flex", columnGap: '20px', alignItems: 'center' }}>
                         <p style={{fontSize: '18px'}}>
                             {!userInfo.loading && userInfo.success
                                 ? userInfo.data[0].first_name

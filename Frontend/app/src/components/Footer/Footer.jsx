@@ -12,7 +12,8 @@ const Footer = () => {
                     width: '100%',
                     padding: '15px 0',
                     borderTop: '1px solid var(--bg_color)',
-                    backgroundColor: '#fff'
+                    backgroundColor: "var(--main_color)",
+                    color: "var(--bg_color)",
                 }}
             >
                 <div

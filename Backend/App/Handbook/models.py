@@ -5,7 +5,7 @@ from django.urls import reverse
 class ModelOfMachine(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель машины')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель машины'
@@ -21,7 +21,7 @@ class ModelOfMachine(models.Model):
 class ModelOfEngine(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель двигателя')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель двигателя'
@@ -34,7 +34,7 @@ class ModelOfEngine(models.Model):
 class ModelOfTransmission(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель трансмиссии')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Модель Трансмиссии'
@@ -47,7 +47,7 @@ class ModelOfTransmission(models.Model):
 class ModelOfMainAxle(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель ведущего моста')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Модель ведущего моста'
@@ -60,7 +60,7 @@ class ModelOfMainAxle(models.Model):
 class ModelOfSteeringAxle(models.Model):
     title = models.CharField(max_length=128, verbose_name='Модель управляемого моста')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Модель управляемого моста'
@@ -73,7 +73,7 @@ class ModelOfSteeringAxle(models.Model):
 class TypeOfMaintenance(models.Model):
     title = models.CharField(max_length=128, verbose_name='Вид ТО')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Вид ТО'
@@ -86,7 +86,7 @@ class TypeOfMaintenance(models.Model):
 class TypeOfFailure(models.Model):
     title = models.CharField(max_length=128, verbose_name='характер отказа')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Причина отказа'
@@ -99,7 +99,7 @@ class TypeOfFailure(models.Model):
 class MethodOfRecovery(models.Model):
     title = models.CharField(max_length=128, verbose_name='способ восстановления')
     slug = models.SlugField(max_length=128, verbose_name='Название', blank=True)
-    description = models.CharField(max_length=128, verbose_name='Описание')
+    description = models.TextField(verbose_name='Описание')
     
     class Meta:
         verbose_name = 'Способ Восстановления'

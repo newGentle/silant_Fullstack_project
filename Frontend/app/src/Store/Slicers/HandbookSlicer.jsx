@@ -33,6 +33,10 @@ export const EngineData = createAsyncThunk(
 
 
 const initialState = {
+    engine: null,
+    transmission: null,
+    mainaxle: null,
+    steeringaxle: null,
     loading: false,
     error: null,
     success: false,
@@ -40,7 +44,7 @@ const initialState = {
 };
 
 const HandbookSlicer = createSlice({
-    name: "engine",
+    name: "handbook",
     initialState,
     
     extraReducers: (builder) => {

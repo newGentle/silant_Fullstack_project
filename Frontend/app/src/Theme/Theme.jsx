@@ -1,4 +1,4 @@
-import { darken, createTheme } from "@mui/material";
+import { createTheme, lighten } from "@mui/material";
 
 const theme = createTheme({
     components: {
@@ -7,16 +7,17 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     
-                        backgroundColor: "var(--main_color)",
+                        backgroundColor: "var(--secondary_color)",
                         fontFamily: "Astra, Inter, sans",
                         textTransform: "none",
-                        borderRadius: "10px",
+                        borderRadius: "2px",
                         padding: "0 25px",
                         color: "var(--bg_color)",
-                        boxShadow: "7px 7px 5px -5px rgba(34, 60, 80, 0.6)",
+                        maxHeight: "45px",
+                        minHeight: "35px",
 
                         "&:hover": {
-                            backgroundColor: darken('#163E6C', 0.2),
+                            backgroundColor: lighten('#D20A11', 0.3),
                         }
                     
                 }
