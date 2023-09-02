@@ -1,13 +1,34 @@
 import * as React from "react";
-import { Link, Table } from "@mui/material";
+import { Button, Link, Table, ThemeProvider } from "@mui/material";
 import { ComplaintsFilters } from "../Filters/ComplaintsFilters";
+import { useNavigate } from "react-router-dom";
+import { theme } from "../../../../Theme/Theme";
 
 const Complaints = (props) => {
-    const { complaints } = props;
-
+    const { complaints, user } = props;
+    const navigate = useNavigate();
     return (
         <>
-        <ComplaintsFilters />
+            {user.success ? (
+                user.data[0].role === "Менеджер" ||
+                user.data[0].role === "Сервисная компания" ? (
+                    <ThemeProvider theme={theme}>
+                        <Button
+                            style={{ marginBottom: "20px" }}
+                            onClick={() => {
+                                navigate("/datainsert/complaints/");
+                            }}
+                        >
+                            Добавить новую запись
+                        </Button>
+                    </ThemeProvider>
+                ) : (
+                    <></>
+                )
+            ) : (
+                <></>
+            )}
+            <ComplaintsFilters />
 
             <div style={{ overflowX: "scroll" }}>
                 <Table>
