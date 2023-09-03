@@ -23,3 +23,4 @@ class ModelOfSteeringAxleSerialiser(serializers.ModelSerializer):
     class Meta:
         model = ModelOfSteeringAxle
         fields = ('__all__')
+

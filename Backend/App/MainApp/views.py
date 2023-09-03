@@ -81,5 +81,6 @@ class DetailMaintenance(viewsets.ModelViewSet):
     queryset = Machine.objects.all()
     serializer_class = DetailedMachineSerilizer
    
+
         
     

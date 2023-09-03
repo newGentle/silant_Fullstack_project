@@ -61,7 +61,7 @@ const Complaints = (props) => {
                                     <td>{value.operatingTime}</td>
                                     <td>
                                         <Link
-                                            href={`nodeoffFailure/${value.nodeOfFailure.id}`}
+                                            href={`typeoffailure/${value.nodeOfFailure.id}`}
                                         >
                                             {value.nodeOfFailure.title}
                                         </Link>

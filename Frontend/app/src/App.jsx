@@ -27,7 +27,7 @@ function App() {
           <Route path='/consumer/:consumer/' element={<Handbook />} />
           <Route path='/servicecompany/:servicecompany/' element={<Handbook />} />
           <Route path='/maintenance/:maintenance/' element={<Handbook />} />
-          <Route path='/nodeoffailure/:nodeoffailure/' element={<Handbook />} />
+          <Route path='/typeoffailure/:nodeoffailure/' element={<Handbook />} />
           <Route path='/recoverymethod/:recoverymethod/' element={<Handbook />} />
         </Routes>
       <Footer />
