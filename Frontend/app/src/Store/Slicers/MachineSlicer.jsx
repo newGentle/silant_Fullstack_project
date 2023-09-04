@@ -1,6 +1,35 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const AddMachineData = createAsyncThunk(
+    "addmachine/AddMachineData",
+    async (body, { rejectWithValue }) => {
+        console.log(body)
+        try {
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "*/*",
+                    Authorization: "Bearer " + localStorage.getItem('accessToken'),
+                },
+            };
+            const { data } = await axios.post(
+                "http://127.0.0.1:8000/api/v1/machine/",
+                {body},
+                header
+            );
+
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
 export const MachineData = createAsyncThunk(
     "machine/MachineData",
     async (accessToken, { rejectWithValue }) => {
@@ -61,7 +90,7 @@ const initialState = {
     success: false,
     status: null,
     data: null,
-
+    addmachine: null,
     oneData: null
 };
 
@@ -70,6 +99,24 @@ const MachineSlicer = createSlice({
     initialState,
 
     extraReducers: (builder) => {
+        builder.addCase(AddMachineData.fulfilled, (state, action) => {
+            state.addmachine = action.payload;
+            state.status = "OK";
+            state.loading = false;
+            state.success = true;
+        });
+
+        builder.addCase(AddMachineData.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(AddMachineData.rejected, (state, action) => {
+            state.error = action.payload;
+            state.data = null;
+            state.loading = false;
+            state.status = "BAD";
+        });
         builder.addCase(MachineData.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = "OK";

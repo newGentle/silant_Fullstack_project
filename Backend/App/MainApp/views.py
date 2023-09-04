@@ -1,5 +1,6 @@
 from rest_framework.permissions import DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from .serializers import MachineSerializer, MaintenanceSerializer, ComplaintsSerializer, DetailedMachineSerilizer
 from .models import Machine, Maintenance, Complaints
 from django.db.models import Q 
@@ -14,7 +15,7 @@ class MachineViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         user = self.request.user
-        
+        print(user.get_all_permissions())
         if user.is_anonymous:
             return Machine.objects.all()
         

@@ -8,6 +8,4 @@ router.register(r'users', UsersViewSet, basename='users')
 
 urlpatterns = [
     path('', include(router.urls)),
-    # path('auth-login/', include('rest_framework.urls', namespace='rest_framework')),
-    # path('userinfo/', UserViewSet.as_view({'get': 'list'}), name='userinfo'),
 ]

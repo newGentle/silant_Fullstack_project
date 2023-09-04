@@ -5,13 +5,14 @@ import { AddMachine } from "./AddMachine";
 import { Button } from "@mui/material";
 import { AddMaintenance } from "./AddMaintenance";
 import { AddComplaints } from "./AddComplaints";
+import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
 
 const DataInsertPage = () => {
     const navigate = useNavigate();
     const params = useParams();
 
     return (
-        <>
+        <CustomContainer>
             {params.type === "machine" ? (
                 <AddMachine />
             ) : params.type === "maintenance" ? (
@@ -28,7 +29,7 @@ const DataInsertPage = () => {
             >
                 Назад
             </Button>
-        </>
+        </CustomContainer>
     );
 };
 

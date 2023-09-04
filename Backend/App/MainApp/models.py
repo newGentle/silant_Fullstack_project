@@ -18,7 +18,7 @@ class Machine(models.Model):
     dateOfShipment = models.DateField(verbose_name='Дата отгрузки с завода')
     consumer = models.CharField(max_length=128, verbose_name='Грузополучатель')
     operationAddress = models.CharField(max_length=128, verbose_name='Адрес поставки')
-    additionalOptions = models.TextField(verbose_name='Доп. опции')
+    additionalOptions = models.TextField(verbose_name='Доп. опции', blank=True)
     client = models.ForeignKey(User, verbose_name='Клиент', related_name='handbook_client', on_delete=models.CASCADE)
     serviceCompany = models.ForeignKey(User, verbose_name='Сервисная компания', related_name='machine_serviceCompany', on_delete=models.CASCADE)
     

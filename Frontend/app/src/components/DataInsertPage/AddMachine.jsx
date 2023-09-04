@@ -23,6 +23,7 @@ import {
     TransmissionData,
     UsersData,
 } from "../../Store/Slicers/HandbookSlicer";
+import { AddMachineData } from "../../Store/Slicers/MachineSlicer";
 
 const AddMachine = () => {
     const disptach = useDispatch();
@@ -61,16 +62,34 @@ const AddMachine = () => {
     const [client, setClient] = React.useState("");
     const [serviceCompany, setServiceCompany] = React.useState("");
     
+
     const formSubmit = (event) => {
         event.preventDefault();
-        console.log(
-            JSON.stringify({
-                machine: factoryNumberOfMachine,
-            })
-        );
+        const body = JSON.stringify({
+            factoryNumberOfMachine: factoryNumberOfMachine,
+            modelOfMachine: machine,
+            modelOfEngine: engine,
+            factoryNumberOfEngine: factoryNumberOfEngine,
+            modelOfTransmission: transmission,
+            factoryNumberOfTransmission: factoryNumberOfTransmission,
+            modelOfMainAxle: mainAxle,
+            factoryNumberOfMainAxle: factoryNumberOfMainAxle,
+            modelOfSteeringAxle: steeringAxle,
+            factoryNumberOfSteeringAxle: factoryNumberOfSteeringAxle,
+            supplyContract: supplyContract,
+            dateOfShipment: dateOfShipment,
+            consumer: consumer,
+            operationAddress: operationAddress,
+            additionalOptions: additionalOptions,
+            client: client,
+            serviceCompany: serviceCompany,
+        });
+        console.log(body)
+        // disptach(AddMachineData(body));
     };
+
     return (
-        <div>
+        <>
             <form
                 style={{ display: "flex", flexDirection: "column" }}
                 onSubmit={formSubmit}
@@ -230,7 +249,12 @@ const AddMachine = () => {
                             <DatePicker
                                 value={dateOfShipment}
                                 label="Дата отгрузки с завода"
-                                onChange={(value) => setDateOfShipment(value.$d)}
+                                format="YYYY-MM-DD"
+                                views={['year', 'month', 'day']}
+                                
+                                onChange={(value) =>
+                                    setDateOfShipment(value)
+                                }
                             />
                         </DemoContainer>
                     </LocalizationProvider>
@@ -301,7 +325,7 @@ const AddMachine = () => {
                     <Button type="submit">Добавить</Button>
                 </ThemeProvider>
             </form>
-        </div>
+        </>
     );
 };
 
