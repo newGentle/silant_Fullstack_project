@@ -8,7 +8,7 @@ const MainPage = () => {
     
     return (
         <>
-            {(logged.is_Auth && logged.success) || localStorage.getItem('accessToken') ? (
+            {(logged.is_Auth && logged.success) || localStorage.getItem('Authenticated')? (
                 <>
                     <Authorized />
                 </>

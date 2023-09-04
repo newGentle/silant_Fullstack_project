@@ -14,3 +14,9 @@ class UserViewSet(viewsets.ModelViewSet):
         
         user = User.objects.filter(pk = self.request.user.pk)
         return user
+    
+class UsersViewSet(viewsets.ModelViewSet):
+    http_method_names = ('get',)
+    serializer_class = UserSerializer
+    permission_classes = [IsAuthenticated, ]
+    queryset = User.objects.filter().values('id', 'username', 'first_name', 'handbook_client', 'maintenance_serviceCompany')

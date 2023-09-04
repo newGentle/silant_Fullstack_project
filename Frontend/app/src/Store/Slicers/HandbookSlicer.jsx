@@ -1,6 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+export const MachineListData = createAsyncThunk(
+    "machinelist/MachineListData",
+    async (id, { rejectWithValue }) => {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "*/*",
+                    Authorization: "Bearer " + accessToken,
+                },
+            };
+            let url = "";
+
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/modelOfMachine/" + id;
+            } else {
+                url = "http://127.0.0.1:8000/api/v1/modelOfMachine/";
+            }
+
+            const { data } = await axios.get(url, header);
+
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
 export const EngineData = createAsyncThunk(
     "engine/EngineData",
     async (id, { rejectWithValue }) => {
@@ -13,11 +45,15 @@ export const EngineData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
+            let url = "";
 
-            const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/modelOfEngine/" + id,
-                header
-            );
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/modelOfEngine/" + id;
+            } else {
+                url = "http://127.0.0.1:8000/api/v1/modelOfEngine/";
+            }
+
+            const { data } = await axios.get(url, header);
 
             return data;
         } catch (error) {
@@ -42,11 +78,13 @@ export const TransmissionData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
-
-            const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/modelOfTransmission/" + id,
-                header
-            );
+            let url = "";
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/modelOfTransmission/" + id;
+            } else {
+                url = "http://127.0.0.1:8000/api/v1/modelOfTransmission/";
+            }
+            const { data } = await axios.get(url, header);
 
             return data;
         } catch (error) {
@@ -71,11 +109,13 @@ export const MainAxleData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
-
-            const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/modelOfMainAxle/" + id,
-                header
-            );
+            let url = "";
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/modelOfMainAxle/" + id;
+            } else {
+                url = "http://127.0.0.1:8000/api/v1/modelOfMainAxle/";
+            }
+            const { data } = await axios.get(url, header);
 
             return data;
         } catch (error) {
@@ -100,11 +140,13 @@ export const SteeringAxleData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
-
-            const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/modelOfSteeringAxle/" + id,
-                header
-            );
+            let url = "";
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/modelOfSteeringAxle/" + id;
+            } else {
+                url = "http://127.0.0.1:8000/api/v1/modelOfSteeringAxle/";
+            }
+            const { data } = await axios.get(url, header);
 
             return data;
         } catch (error) {
@@ -116,7 +158,6 @@ export const SteeringAxleData = createAsyncThunk(
         }
     }
 );
-
 
 export const TypeOfMaintenanceData = createAsyncThunk(
     "typeofmaintenance/TypeOfMaintenanceData",
@@ -164,7 +205,71 @@ export const TypeOfFailureData = createAsyncThunk(
                 "http://127.0.0.1:8000/api/v1/typeOfFailure/" + id,
                 header
             );
-                console.log(data)
+            console.log(data);
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
+export const MethodOfRecoveryData = createAsyncThunk(
+    "methodofrecovery/MethodOfRecoveryData",
+    async (id, { rejectWithValue }) => {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "*/*",
+                    Authorization: "Bearer " + accessToken,
+                },
+            };
+
+            const { data } = await axios.get(
+                "http://127.0.0.1:8000/api/v1/methodOfRecovery/" + id,
+                header
+            );
+            console.log(data);
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
+export const UsersData = createAsyncThunk(
+    "users/UsersData",
+    async (id, { rejectWithValue }) => {
+        try {
+            const accessToken = localStorage.getItem("accessToken");
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    Accept: "*/*",
+                    Authorization: "Bearer " + accessToken,
+                },
+            };
+            let url = '';
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/users/" + id + "/";
+            }
+            else {
+                url  ="http://127.0.0.1:8000/api/v1/users/";
+            }
+            const { data } = await axios.get(
+                url,
+                header
+            );
+
             return data;
         } catch (error) {
             if (error.response && error.response.data.message) {
@@ -177,6 +282,7 @@ export const TypeOfFailureData = createAsyncThunk(
 );
 
 const initialState = {
+    machinelist: null,
     engine: null,
     transmission: null,
     mainaxle: null,
@@ -184,6 +290,7 @@ const initialState = {
     typeofmaintenance: null,
     typeoffailure: null,
     methodofrecovery: null,
+    users: null,
     loading: false,
     error: null,
     success: false,
@@ -195,6 +302,23 @@ const HandbookSlicer = createSlice({
     initialState,
 
     extraReducers: (builder) => {
+        builder.addCase(MachineListData.fulfilled, (state, action) => {
+            state.machinelist = action.payload;
+            state.status = "OK";
+            state.loading = false;
+            state.success = true;
+        });
+
+        builder.addCase(MachineListData.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(MachineListData.rejected, (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            state.status = "BAD";
+        });
         builder.addCase(EngineData.fulfilled, (state, action) => {
             state.engine = action.payload;
             state.status = "OK";
@@ -284,7 +408,7 @@ const HandbookSlicer = createSlice({
             state.loading = false;
             state.status = "BAD";
         });
-        
+
         builder.addCase(TypeOfFailureData.fulfilled, (state, action) => {
             state.typeoffailure = action.payload;
             state.status = "OK";
@@ -298,6 +422,42 @@ const HandbookSlicer = createSlice({
         });
 
         builder.addCase(TypeOfFailureData.rejected, (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            state.status = "BAD";
+        });
+
+        builder.addCase(MethodOfRecoveryData.fulfilled, (state, action) => {
+            state.methodofrecovery = action.payload;
+            state.status = "OK";
+            state.loading = false;
+            state.success = true;
+        });
+
+        builder.addCase(MethodOfRecoveryData.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(MethodOfRecoveryData.rejected, (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            state.status = "BAD";
+        });
+
+        builder.addCase(UsersData.fulfilled, (state, action) => {
+            state.users = action.payload;
+            state.status = "OK";
+            state.loading = false;
+            state.success = true;
+        });
+
+        builder.addCase(UsersData.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(UsersData.rejected, (state, action) => {
             state.error = action.payload;
             state.loading = false;
             state.status = "BAD";

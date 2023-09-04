@@ -1,9 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from MainApp.serializers import TypeOfFailureSerializer, TypeOfMaintenanceSerializer, MethodOfRecoverySerializer
+from MainApp.serializers import *
 from .serializers import *
 from .models import *
 # Create your views here.
+
+class ModelOfMachineViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ModelOfMachineSerializer
+    http_method_names = ('get',)
+    queryset = ModelOfMachine.objects.all()
+
 
 class ModelOfEngineViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

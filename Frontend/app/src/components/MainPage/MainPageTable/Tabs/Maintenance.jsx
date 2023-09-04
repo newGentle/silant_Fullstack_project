@@ -68,7 +68,7 @@ const Maintenance = (props) => {
                                     <td>{value.dateOrderWork}</td>
                                     <td>
                                         <Link
-                                            href={`servicecompany/${value.maintenanceServiceCompany.id}`}
+                                            href={`serviceCompany/${value.maintenanceServiceCompany.id}`}
                                         >
                                             {
                                                 value.maintenanceServiceCompany

@@ -54,6 +54,7 @@ const AuthSlicer = createSlice({
     reducers: {
         logout: (state) => {
             localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
             localStorage.removeItem("userLogin")
             localStorage.removeItem("user_firstname")
             localStorage.removeItem("Authenticated")

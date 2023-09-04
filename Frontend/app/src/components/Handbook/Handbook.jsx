@@ -1,22 +1,27 @@
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     EngineData,
     MainAxleData,
+    MethodOfRecoveryData,
     SteeringAxleData,
     TransmissionData,
     TypeOfFailureData,
     TypeOfMaintenanceData,
+    UsersData,
 } from "../../Store/Slicers/HandbookSlicer";
+import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
+import { Button, ThemeProvider } from "@mui/material";
+import { theme } from "../../Theme/Theme";
 
 const Handbook = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const dispatch = useDispatch();
     const key = Object.keys(params)[0];
     const id = Object.values(params)[0];
     const handbook = useSelector((state) => state.handbook);
-    
     React.useEffect(() => {
         if (key === "engine") {
             dispatch(EngineData(id));
@@ -42,10 +47,20 @@ const Handbook = () => {
             
             dispatch(TypeOfFailureData(id));
         }
+        
+        if (key === "recoverymethod") {
+            
+            dispatch(MethodOfRecoveryData(id));
+        }
+
+        if (key === "servicecompany" || key === "client") {
+            
+            dispatch(UsersData(id));
+        }
     }, [key, dispatch, id]);
 
     return (
-        <div>
+        <CustomContainer style={{textAlign: 'center'}}>
             {handbook.success && key === "engine" ? (
                 <>
                     <h1>{handbook.engine.title}</h1>
@@ -76,10 +91,25 @@ const Handbook = () => {
                     <h1>{handbook.typeoffailure.title}</h1>
                     <h3>{handbook.typeoffailure.description}</h3>
                 </>
+            ) : handbook.success && key === "recoverymethod" ? (
+                <>
+                    <h1>{handbook.methodofrecovery.title}</h1>
+                    <h3>{handbook.methodofrecovery.description}</h3>
+                </>
+            ) : handbook.success && (key === "servicecompany" || key === "client") ? (
+                <>
+                    <h1>{handbook.users.username}</h1>
+                    <h3>{handbook.users.role}</h3>
+                </>
             ) : (
                 <></>
             )}
-        </div>
+            <ThemeProvider theme={theme}>
+                <Button onClick={() => { navigate(-1)}}>
+                    Назад
+                </Button>
+            </ThemeProvider>
+        </CustomContainer>
     );
 };
 

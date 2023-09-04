@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { theme } from "../../Theme/Theme";
 import { useDispatch, useSelector } from "react-redux";
 import { UserData } from "../../Store/Slicers/UserInfoSlicer";
+import { logout } from "../../Store/Slicers/AuthSlicer";
 
 const Header = () => {
     const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Header = () => {
                 <div>
                     <p>+7-8352-20-12-09, telegram</p>
                 </div>
-                {localStorage.getItem("Authenticated") ? (
+                {localStorage.getItem("Authenticated") && userInfo.status !== 'BAD' ? (
                     <div style={{ display: "flex", columnGap: '20px', alignItems: 'center' }}>
                         <p style={{fontSize: '18px'}}>
                             {!userInfo.loading && userInfo.success
@@ -64,6 +65,7 @@ const Header = () => {
                         <ThemeProvider theme={theme}>
                             <Button
                                 onClick={() => {
+                                    dispatch(logout());
                                     navigate("/login");
                                 }}
                             >
