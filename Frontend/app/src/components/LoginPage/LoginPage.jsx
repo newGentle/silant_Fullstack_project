@@ -28,7 +28,7 @@ const LoginPage = () => {
 
     return (
         <CustomContainer>
-            <div
+            <form
                 style={{
                     border: "1px solid var(--bg_color)",
                     padding: "30px",
@@ -40,8 +40,9 @@ const LoginPage = () => {
                     width: '350px'
                 }}
             >
-                <Input id="username" placeholder="Username" required />
+                <Input id="username" placeholder="Username" autoComplete="username" required />
                 <Input
+                autoComplete="current-password"
                     id="password"
                     type="password"
                     placeholder="password"
@@ -58,7 +59,7 @@ const LoginPage = () => {
                         Войти
                     </Button>
                 </ThemeProvider>
-            </div>
+            </form>
         </CustomContainer>
     );
 };

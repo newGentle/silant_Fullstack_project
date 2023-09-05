@@ -15,13 +15,17 @@ const Header = () => {
     const logged = useSelector((state) => state.login);
 
     React.useEffect(() => {
-        if (logged.is_Auth || !userInfo.success) {
+        if (logged.is_Auth || localStorage.getItem('accessToken'))  {
             dispatch(UserData(localStorage.getItem("accessToken")));
         }
-    }, [dispatch, userInfo.success, logged]);
+        if (!userInfo.success && localStorage.getItem("is_Authenticated")) {
+            dispatch(logout());
+            navigate('/');
+        }
+    }, [dispatch, userInfo.success, logged, navigate]);
 
     return (
-        <CustomContainer style={{backgroundColor: "var(--bg_color)" }}>
+        <CustomContainer style={{ backgroundColor: "var(--bg_color)" }}>
             <div
                 style={{
                     display: "flex",
@@ -42,9 +46,16 @@ const Header = () => {
                 <div>
                     <p>+7-8352-20-12-09, telegram</p>
                 </div>
-                {localStorage.getItem("Authenticated") && userInfo.status !== 'BAD' ? (
-                    <div style={{ display: "flex", columnGap: '20px', alignItems: 'center' }}>
-                        <p style={{fontSize: '18px'}}>
+                {localStorage.getItem("Authenticated") &&
+                userInfo.status !== "BAD" ? (
+                    <div
+                        style={{
+                            display: "flex",
+                            columnGap: "20px",
+                            alignItems: "center",
+                        }}
+                    >
+                        <p style={{ fontSize: "18px" }}>
                             {!userInfo.loading && userInfo.success
                                 ? userInfo.data[0].first_name
                                 : "Загрузка"}{" "}

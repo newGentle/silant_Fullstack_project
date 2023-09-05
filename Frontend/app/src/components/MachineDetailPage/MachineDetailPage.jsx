@@ -20,7 +20,7 @@ const MachineDetailPage = () => {
     return (
         <CustomContainer>
             <DetailTable machine={machine} />
-            <Button onClick={() => {navigate(-1)}}>Назад</Button>
+            <Button onClick={() => {navigate('/')}}>Назад</Button>
         </CustomContainer>
     );
 };
