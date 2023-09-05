@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+    Alert,
     Button,
     FormControl,
     InputLabel,
@@ -23,12 +24,15 @@ import {
     TransmissionData,
     UsersData,
 } from "../../Store/Slicers/HandbookSlicer";
-import { AddMachineData } from "../../Store/Slicers/MachineSlicer";
+import { AddMachineData, afterCreated } from "../../Store/Slicers/MachineSlicer";
+import { useNavigate } from "react-router-dom";
 
 const AddMachine = () => {
+    const navigate = useNavigate();
     const disptach = useDispatch();
 
     const handbookList = useSelector((state) => state.handbook);
+    const created = useSelector((state) => state.machine);
 
     React.useEffect(() => {
         disptach(MachineListData());
@@ -37,7 +41,14 @@ const AddMachine = () => {
         disptach(MainAxleData());
         disptach(SteeringAxleData());
         disptach(UsersData());
-    }, [disptach]);
+        if (created.addmachine){
+            setTimeout(() => {
+                disptach(afterCreated())
+                navigate('/');
+            },2000)
+        }
+    }, [disptach, created, navigate]);
+    
 
     const [factoryNumberOfMachine, setFactoryNumberOfMachine] =
         React.useState("");
@@ -61,41 +72,43 @@ const AddMachine = () => {
     const [steeringAxle, setSteeringAxle] = React.useState("");
     const [client, setClient] = React.useState("");
     const [serviceCompany, setServiceCompany] = React.useState("");
-    
 
     const formSubmit = (event) => {
         event.preventDefault();
         const body = JSON.stringify({
             factoryNumberOfMachine: factoryNumberOfMachine,
-            modelOfMachine: machine,
-            modelOfEngine: engine,
+            modelOfMachine: {title: machine},
+            modelOfEngine: {title: engine},
             factoryNumberOfEngine: factoryNumberOfEngine,
-            modelOfTransmission: transmission,
+            modelOfTransmission: {title: transmission},
             factoryNumberOfTransmission: factoryNumberOfTransmission,
-            modelOfMainAxle: mainAxle,
+            modelOfMainAxle: {title: mainAxle},
             factoryNumberOfMainAxle: factoryNumberOfMainAxle,
-            modelOfSteeringAxle: steeringAxle,
+            modelOfSteeringAxle: {title: steeringAxle},
             factoryNumberOfSteeringAxle: factoryNumberOfSteeringAxle,
             supplyContract: supplyContract,
             dateOfShipment: dateOfShipment,
             consumer: consumer,
             operationAddress: operationAddress,
             additionalOptions: additionalOptions,
-            client: client,
-            serviceCompany: serviceCompany,
+            client: {first_name: client},
+            serviceCompany: {first_name: serviceCompany},
         });
-        console.log(body)
-        // disptach(AddMachineData(body));
+        
+        disptach(AddMachineData(body));
     };
 
     return (
-        <>
+        <div>
+            {created.addmachine && 
+            <Alert severity="success">Запись Добавлен</Alert>
+            }
             <form
                 style={{ display: "flex", flexDirection: "column" }}
                 onSubmit={formSubmit}
             >
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required >
+                    <TextField required
                         label="Зав. № Техники"
                         onChange={(e) =>
                             setFactoryNumberOfMachine(e.target.value)
@@ -103,7 +116,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="modelofmachine">Модель Техники</InputLabel>
                     <Select
                         name="modelofmachine"
@@ -121,8 +134,8 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Зав. № двигателя"
                         onChange={(e) =>
                             setFactoryNumberOfEngine(e.target.value)
@@ -130,7 +143,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="modelofengine">Модель двигателя</InputLabel>
                     <Select
                         defaultValue="default"
@@ -149,8 +162,8 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Зав. № трансмиссии"
                         onChange={(e) =>
                             setFactoryNumberOfTransmission(e.target.value)
@@ -158,7 +171,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="modeloftransmission">
                         Модель трансмиссии
                     </InputLabel>
@@ -178,8 +191,8 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Зав. № ведущего моста"
                         onChange={(e) =>
                             setFactoryNumberOfMainAxle(e.target.value)
@@ -187,7 +200,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="modelofmainaxle">
                         Модель ведущего моста
                     </InputLabel>
@@ -207,8 +220,8 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Зав. № управляемого моста"
                         onChange={(e) =>
                             setFactoryNumberOfSteeringAxle(e.target.value)
@@ -216,7 +229,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="modelofsteeringaxle">
                         Модель управляемого моста
                     </InputLabel>
@@ -236,39 +249,55 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Договор поставки №, дата"
                         onChange={(e) => setSupplyContract(e.target.value)}
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DemoContainer components={["DatePicker"]}>
                             <DatePicker
                                 value={dateOfShipment}
                                 label="Дата отгрузки с завода"
                                 format="YYYY-MM-DD"
-                                views={['year', 'month', 'day']}
-                                
-                                onChange={(value) =>
-                                    setDateOfShipment(value)
-                                }
+                                views={["year", "month", "day"]}
+                                onChange={(value) => {
+                                    const formattedDate = new Date(value);
+                                    const date =
+                                        formattedDate.getDate().toString()
+                                            .length > 1
+                                            ? formattedDate.getDate().toString()
+                                            : `0${formattedDate.getDate()}`;
+                                    const month =
+                                        (
+                                            formattedDate.getMonth() + 1
+                                        ).toString().length > 1
+                                            ? formattedDate.getMonth() + 1
+                                            : `0${
+                                                  formattedDate.getMonth() + 1
+                                              }`;
+                                    const year = formattedDate.getFullYear();
+                                    setDateOfShipment(
+                                        year + "-" + month + "-" + date
+                                    );
+                                }}
                             />
                         </DemoContainer>
                     </LocalizationProvider>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Грузополучатель"
                         onChange={(e) => setConsumer(e.target.value)}
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
-                    <TextField
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField required
                         label="Адрес поставки"
                         onChange={(e) => setOperationAddress(e.target.value)}
                     />
@@ -282,7 +311,7 @@ const AddMachine = () => {
                     />
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="client">Клиент</InputLabel>
                     <Select
                         name="client"
@@ -300,7 +329,7 @@ const AddMachine = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl style={{ margin: "10px 0" }}>
+                <FormControl style={{ margin: "10px 0" }} required>
                     <InputLabel id="seviceCompany">
                         Сервисная компания
                     </InputLabel>
@@ -325,7 +354,7 @@ const AddMachine = () => {
                     <Button type="submit">Добавить</Button>
                 </ThemeProvider>
             </form>
-        </>
+        </div>
     );
 };
 

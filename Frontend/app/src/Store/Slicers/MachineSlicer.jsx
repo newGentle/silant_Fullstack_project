@@ -97,7 +97,11 @@ const initialState = {
 const MachineSlicer = createSlice({
     name: "machine",
     initialState,
-
+    reducers: {
+        afterCreated: (state) => {
+            state.addmachine = null
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(AddMachineData.fulfilled, (state, action) => {
             state.addmachine = action.payload;
@@ -156,5 +160,5 @@ const MachineSlicer = createSlice({
         });
     },
 });
-
+export const { afterCreated } = MachineSlicer.actions
 export default MachineSlicer.reducer;

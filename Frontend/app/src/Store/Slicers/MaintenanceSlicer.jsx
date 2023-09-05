@@ -1,6 +1,38 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
 
+export const AddMaintenanceData = createAsyncThunk(
+    "addmaintenance/AddMaintenanceData",
+    async (body, { rejectWithValue }) => {
+        
+        try {
+            
+            const header = {
+                headers: {
+                    "Content-type": "application/json",
+                    "Accept": "*/*",
+                    "Authorization": "Bearer " + localStorage.getItem('accessToken')
+                },
+            };
+
+            const {data} = await axios.post(
+                'http://127.0.0.1:8000/api/v1/maintenance/',
+                body,
+                header
+            );
+         
+            return data;
+        }
+        catch (error) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            } else {
+                return rejectWithValue(error.message);
+            }
+        }
+    }
+);
+
 export const MaintenanceData = createAsyncThunk(
     "maintenance/MaintenanceData",
     async (accessToken, { rejectWithValue }) => {
@@ -33,6 +65,8 @@ export const MaintenanceData = createAsyncThunk(
 
 
 const initialState = {
+    addmaintenance: null,
+    data: null,
     loading: false,
     error: null,
     success: false,
@@ -42,8 +76,31 @@ const initialState = {
 const MaintenanceSlicer = createSlice({
     name: "maintenance",
     initialState,
-    
+    reducers: {
+        afterCreated: (state) => {
+            state.addmaintenance = null
+        }
+    },
+
     extraReducers: (builder) => {
+        builder.addCase(AddMaintenanceData.fulfilled, (state, action) => {
+            state.addmaintenance = action.payload;
+            state.status = 'OK';
+            state.loading = false;
+            state.success = true;
+        });
+
+        builder.addCase(AddMaintenanceData.pending, (state) => {
+            state.loading = true;
+            state.error = null;
+        });
+
+        builder.addCase(AddMaintenanceData.rejected, (state, action) => {
+            state.error = action.payload;
+            state.loading = false;
+            state.status = "BAD";
+        });
+
         builder.addCase(MaintenanceData.fulfilled, (state, action) => {
             state.data = action.payload;
             state.status = 'OK';
@@ -63,5 +120,5 @@ const MaintenanceSlicer = createSlice({
         });
     },
 });
-
+export const { afterCreated } = MaintenanceSlicer.actions
 export default MaintenanceSlicer.reducer;
