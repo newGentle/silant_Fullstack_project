@@ -1,6 +1,9 @@
+import { useMediaQuery, useTheme } from "@mui/material";
 import * as React from "react";
 
 const GenInfoFilters = () => {
+    const queryTheme = useTheme();
+    const query_md = useMediaQuery(queryTheme.breakpoints.down("md"));
     function filter(id, item) {
         let _item = document.getElementById(item).value;
         const tbody = document.querySelector("tbody");
@@ -25,9 +28,17 @@ const GenInfoFilters = () => {
         });
     }
     return (
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: query_md ? "column" : "row",
+                justifyContent: "space-evenly",
+                flexWrap: "wrap",
+            }}
+        >
             <label>
-                Модель техники<br />
+                Модель техники
+                <br />
                 <input
                     type="text"
                     placeholder="техника"
@@ -42,7 +53,8 @@ const GenInfoFilters = () => {
                 />
             </label>
             <label>
-                Модель двигателя<br />
+                Модель двигателя
+                <br />
                 <input
                     type="text"
                     placeholder="Двигатель"
@@ -57,7 +69,8 @@ const GenInfoFilters = () => {
                 />
             </label>
             <label>
-                Модель трансмиссии<br />
+                Модель трансмиссии
+                <br />
                 <input
                     type="text"
                     placeholder="Трансмиссия"
@@ -72,7 +85,8 @@ const GenInfoFilters = () => {
                 />
             </label>
             <label>
-                Модель ведущего моста<br />
+                Модель ведущего моста
+                <br />
                 <input
                     type="text"
                     placeholder="Ведущий мост"
@@ -87,7 +101,8 @@ const GenInfoFilters = () => {
                 />
             </label>
             <label>
-                Модель управляемого моста<br />
+                Модель управляемого моста
+                <br />
                 <input
                     type="text"
                     placeholder="Управляемый мост"

@@ -43,7 +43,7 @@ class FirstNameSerializer(serializers.ModelSerializer):
 class TypeOfMaintenanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeOfMaintenance
-        fields = ['id', 'title', 'slug', 'description']
+        fields = ('__all__')
 
 
 class TypeOfFailureSerializer(serializers.ModelSerializer):

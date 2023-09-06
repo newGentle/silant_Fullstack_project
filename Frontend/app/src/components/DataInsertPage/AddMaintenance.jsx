@@ -20,11 +20,16 @@ import {
     afterCreated,
 } from "../../Store/Slicers/MaintenanceSlicer";
 import { useNavigate } from "react-router-dom";
+import {
+    TypeOfMaintenanceData,
+    UsersData,
+} from "../../Store/Slicers/HandbookSlicer";
 
 const AddMaintenance = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const typeOfMaintenance = useSelector((state) => state.maintenance);
+    const listOfMaintenance = useSelector((state) => state.handbook);
 
     const machines = typeOfMaintenance.success
         ? typeOfMaintenance.data.map(
@@ -32,20 +37,8 @@ const AddMaintenance = () => {
           )
         : [];
 
-    const maintenances = typeOfMaintenance.success
-        ? typeOfMaintenance.data.map((item) => item.typeOfMaintenance.title)
-        : [];
-
-    const serviceCompanies = typeOfMaintenance.success
-        ? typeOfMaintenance.data.map((item) => item.serviceCompany.first_name)
-        : [];
-
-    const settedMaintenances = [...new Set(maintenances)];
     const settedMachines = [...new Set(machines)];
-    const settedServiceCompanies = [...new Set(serviceCompanies)];
-    settedServiceCompanies.push("Самостоятельно");
     settedMachines.sort();
-    settedMaintenances.sort();
 
     const [machine, setMachine] = React.useState();
     const [maintenance, setMaintenance] = React.useState();
@@ -57,8 +50,10 @@ const AddMaintenance = () => {
         React.useState();
 
     React.useEffect(() => {
-        if (!typeOfMaintenance.success) {
+        if (!typeOfMaintenance.success || !listOfMaintenance.success) {
             dispatch(MaintenanceData(localStorage.getItem("accessToken")));
+            dispatch(TypeOfMaintenanceData());
+            dispatch(UsersData());
         }
         if (typeOfMaintenance.success && typeOfMaintenance.addmaintenance) {
             setTimeout(() => {
@@ -71,6 +66,7 @@ const AddMaintenance = () => {
         navigate,
         typeOfMaintenance.success,
         typeOfMaintenance.addmaintenance,
+        listOfMaintenance.success,
     ]);
 
     const formSubmit = (event) => {
@@ -90,9 +86,7 @@ const AddMaintenance = () => {
     return (
         <div>
             {typeOfMaintenance.addmaintenance && (
-                
-                    <Alert severity="success">Запись добавлен</Alert>
-                
+                <Alert severity="success">Запись добавлен</Alert>
             )}
             <form
                 style={{ display: "flex", flexDirection: "column" }}
@@ -127,10 +121,10 @@ const AddMaintenance = () => {
                         label="Выберите вид ТО"
                         onChange={(e) => setMaintenance(e.target.value)}
                     >
-                        {settedMaintenances &&
-                            settedMaintenances.map((item, idx) => (
-                                <MenuItem key={idx} value={item}>
-                                    {item}
+                        {listOfMaintenance.success &&
+                            listOfMaintenance.typeofmaintenance.map((item) => (
+                                <MenuItem key={item.id} value={item.title}>
+                                    {item.title}
                                 </MenuItem>
                             ))}
                     </Select>
@@ -236,12 +230,22 @@ const AddMaintenance = () => {
                             setMaintenanceServiceCompany(e.target.value)
                         }
                     >
-                        {settedServiceCompanies &&
-                            settedServiceCompanies.map((item, idx) => (
-                                <MenuItem key={idx} value={item}>
-                                    {item}
-                                </MenuItem>
-                            ))}
+                        {listOfMaintenance.success &&
+                            listOfMaintenance.users &&
+                            listOfMaintenance.users.map(
+                                (item) =>
+                                    item.users.role === "SC" && (
+                                        <MenuItem
+                                            key={item.id}
+                                            value={item.first_name}
+                                        >
+                                            {item.first_name}
+                                        </MenuItem>
+                                    )
+                            )}
+                        <MenuItem value={"Самостоятельно"}>
+                            Самостоятельно
+                        </MenuItem>
                     </Select>
                 </FormControl>
                 <ThemeProvider theme={theme}>

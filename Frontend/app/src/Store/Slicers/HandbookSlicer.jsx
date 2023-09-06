@@ -171,9 +171,15 @@ export const TypeOfMaintenanceData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
-
+            let url = '';
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/typeOfMaintenance/" + id;
+            }
+            else {
+                url = "http://127.0.0.1:8000/api/v1/typeOfMaintenance/";
+            }
             const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/typeOfMaintenance/" + id,
+                url,
                 header
             );
 
@@ -200,12 +206,20 @@ export const TypeOfFailureData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
+            let url = '';
+
+            if (id) {
+                url = 'http://127.0.0.1:8000/api/v1/typeOfFailure/' + id;
+            }
+            else
+            {
+                url = 'http://127.0.0.1:8000/api/v1/typeOfFailure/'
+            }
 
             const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/typeOfFailure/" + id,
+                url,
                 header
             );
-            console.log(data);
             return data;
         } catch (error) {
             if (error.response && error.response.data.message) {
@@ -229,12 +243,18 @@ export const MethodOfRecoveryData = createAsyncThunk(
                     Authorization: "Bearer " + accessToken,
                 },
             };
-
+            let url = '';
+            if (id) {
+                url = "http://127.0.0.1:8000/api/v1/methodOfRecovery/" + id;
+            }
+            else
+            {
+                url = "http://127.0.0.1:8000/api/v1/methodOfRecovery/";
+            }
             const { data } = await axios.get(
-                "http://127.0.0.1:8000/api/v1/methodOfRecovery/" + id,
+                url,
                 header
             );
-            console.log(data);
             return data;
         } catch (error) {
             if (error.response && error.response.data.message) {

@@ -29,25 +29,25 @@ import { useNavigate } from "react-router-dom";
 
 const AddMachine = () => {
     const navigate = useNavigate();
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
 
     const handbookList = useSelector((state) => state.handbook);
     const created = useSelector((state) => state.machine);
 
     React.useEffect(() => {
-        disptach(MachineListData());
-        disptach(EngineData());
-        disptach(TransmissionData());
-        disptach(MainAxleData());
-        disptach(SteeringAxleData());
-        disptach(UsersData());
+        dispatch(MachineListData());
+        dispatch(EngineData());
+        dispatch(TransmissionData());
+        dispatch(MainAxleData());
+        dispatch(SteeringAxleData());
+        dispatch(UsersData());
         if (created.addmachine){
             setTimeout(() => {
-                disptach(afterCreated())
+                dispatch(afterCreated());
                 navigate('/');
             },2000)
         }
-    }, [disptach, created, navigate]);
+    }, [dispatch, created, navigate]);
     
 
     const [factoryNumberOfMachine, setFactoryNumberOfMachine] =
@@ -95,7 +95,7 @@ const AddMachine = () => {
             serviceCompany: {first_name: serviceCompany},
         });
         
-        disptach(AddMachineData(body));
+        dispatch(AddMachineData(body));
     };
 
     return (

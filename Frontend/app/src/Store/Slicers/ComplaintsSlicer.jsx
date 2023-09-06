@@ -4,6 +4,7 @@ import axios from "axios";
 export const AddComplaintsData = createAsyncThunk(
     "addcomplaints/AddComplaintsData",
     async (body, { rejectWithValue }) => {
+        console.log(body)
         try {
             const header = {
                 headers: {

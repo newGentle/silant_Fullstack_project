@@ -6,6 +6,7 @@ from .models import Machine, Maintenance, Complaints, User
 from Handbook.models import *
 from django.db.models import Q 
 import json
+from datetime import datetime
 
 # Create your views here.
 
@@ -71,6 +72,10 @@ class MaintenanceViewSet(viewsets.ModelViewSet):
         if self.request.method == 'POST':
             data = self.request.data
             serviceCompany = Machine.objects.get(factoryNumberOfMachine = data['modelOfMachine'])
+            if data['serviceCompany'] == "Самостоятельно":
+                maintenanceServiceCompany = serviceCompany.client
+            else:
+                maintenanceServiceCompany = data['serviceCompany']
             
             newMaintenance = {
                 'machine': Machine.objects.get(factoryNumberOfMachine = data['modelOfMachine']),
@@ -79,7 +84,7 @@ class MaintenanceViewSet(viewsets.ModelViewSet):
                 'operatingTime': data['operatingTime'],
                 'dateOrderWork': data['dateOrderWork'],
                 'numberOrderWork': data['numberOrderWork'],
-                'maintenanceServiceCompany': User.objects.get(first_name = data['serviceCompany']),
+                'maintenanceServiceCompany': User.objects.get(username = maintenanceServiceCompany),
                 'serviceCompany': User.objects.get(username = serviceCompany.serviceCompany)
             }
             Maintenance.objects.create(**newMaintenance)
@@ -107,6 +112,24 @@ class ComplaintsViewSet(viewsets.ModelViewSet):
     permission_classes = (DjangoModelPermissions,)
     serializer_class = ComplaintsSerializer
     http_method_names = ('get', 'post')
+    
+    def create(self, request, *args, **kwargs):
+        if self.request.method == 'POST':
+          
+            newComplaints = {
+                'machine': Machine.objects.get(factoryNumberOfMachine = self.request.data['machine']),
+                'dateOfFailure': datetime.strptime(self.request.data['dateOfFailure'], '%Y-%m-%d').date(),
+                'operatingTime': self.request.data['operatingTime'],
+                'nodeOfFailure': TypeOfFailure.objects.get(title = self.request.data['nodeOfFailure']),
+                'descriptionOfFailure': self.request.data['descriptionOfFailure'],
+                'recoveryMethod': MethodOfRecovery.objects.get(title = self.request.data['recoveryMethod']),
+                'usedSpareParts': self.request.data['usedSpareParts'],
+                'dateOfRecovery': datetime.strptime(self.request.data['dateOfRecovery'], '%Y-%m-%d').date(),
+                'serviceCompany': User.objects.get(first_name = self.request.data['serviceCompany'])
+            }
+            Complaints.objects.create(**newComplaints)
+            return Response({'message': 'Запись Добавлен'}, status=status.HTTP_201_CREATED)
+        # return super().create(request, *args, **kwargs)
     
     def get_queryset(self):
         user = self.request.user

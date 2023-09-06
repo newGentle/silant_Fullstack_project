@@ -1,0 +1,20 @@
+Сервисная компания:
+    PromTeh
+    Silant
+    FNS
+
+Клиент:
+    FPK21
+    Ranskiy
+    RMK
+    Zander
+    komplekt_postavka
+    TrudnikovSV
+    MNS77
+
+Менеджер:
+    manager
+
+
+пароль для всех:
+    Test123456

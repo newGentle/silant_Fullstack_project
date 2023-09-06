@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.status import HTTP_401_UNAUTHORIZED
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from MainApp.serializers import *
 from .serializers import *
@@ -9,8 +11,22 @@ class ModelOfMachineViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ModelOfMachineSerializer
     http_method_names = ('get',)
-    queryset = ModelOfMachine.objects.all()
 
+    def get_queryset(self):
+        user = self.request.user
+        if user.users.role == 'MR' or user.is_superuser:
+            return ModelOfMachine.objects.all()
+        
+        if user.users.role == 'SC':
+            machines = Machine.objects.filter(serviceCompany = user)
+            return ModelOfMachine.objects.filter(machine__in = machines)
+        
+        if user.users.role == 'CR':
+            machines = Machine.objects.filter(client = user)
+            return ModelOfMachine.objects.filter(machine__in = machines)
+            
+        response = {'message': 'Требуется авторизация'}
+        return Response(response, HTTP_401_UNAUTHORIZED)
 
 class ModelOfEngineViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)

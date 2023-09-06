@@ -1,6 +1,9 @@
+import { useMediaQuery, useTheme } from "@mui/material";
 import * as React from "react";
 
 const MaintenanceFilters = () => {
+    const queryTheme = useTheme();
+    const query_md = useMediaQuery(queryTheme.breakpoints.down("md"));
     function filter(id, item) {
         let _item = document.getElementById(item).value;
         const tbody = document.querySelector("tbody");
@@ -8,8 +11,12 @@ const MaintenanceFilters = () => {
 
         for (let index = 1; index < tr.length; index++) {
             const element =
-                tr[index].querySelectorAll("td")[id].textContent.toLowerCase() ||
-                tr[index].querySelectorAll("td")[id].querySelector("a")
+                tr[index]
+                    .querySelectorAll("td")
+                    [id].textContent.toLowerCase() ||
+                tr[index]
+                    .querySelectorAll("td")
+                    [id].querySelector("a")
                     .textContent.toLowerCase();
 
             if (!element.includes(_item.toLowerCase())) {
@@ -27,7 +34,13 @@ const MaintenanceFilters = () => {
         });
     }
     return (
-        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: query_md ? "column" : "row",
+                justifyContent: "space-evenly",
+            }}
+        >
             <label>
                 Зав № техники
                 <br />
