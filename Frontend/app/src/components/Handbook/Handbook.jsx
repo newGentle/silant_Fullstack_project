@@ -26,7 +26,7 @@ const Handbook = () => {
     const user = useSelector((state) => state.user);
 
     React.useEffect(() => {
-        if (user.success === false) {
+        if (!localStorage.getItem('Authenticated')) {
             navigate('/');
         }
     

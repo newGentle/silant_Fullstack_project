@@ -3,28 +3,39 @@ import { Button, Link, Table, ThemeProvider } from "@mui/material";
 import { GenInfoFilters } from "../Filters/GenInfoFilters";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../Theme/Theme";
+import { useDispatch, useSelector } from "react-redux";
+import { MachineData } from "../../../../Store/Slicers/MachineSlicer";
 
-const GenInfo = (props) => {
-    const { machine, user } = props;
+const GenInfo = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+    const logged = useSelector((state) => state.user);
+    const machine = useSelector((state) => state.machine);
+
+    React.useEffect(() => {
+        if (!machine.data) {
+            if (logged.success || localStorage.getItem("accessToken")) {
+                dispatch(MachineData(localStorage.getItem("accessToken")));
+            }
+        }
+    }, [dispatch, logged]);
+
+    if (logged.loading && !logged.success) {
+        return "loading";
+    }
     return (
         <>
-            {user.success ? (
-                user.data[0].role === "Менеджер" ? (
-                    <ThemeProvider theme={theme}>
-                        <Button
-                            style={{ marginBottom: "20px" }}
-                            onClick={() => {
-                                navigate("/datainsert/machine/");
-                            }}
-                        >
-                            Добавить новую запись
-                        </Button>
-                    </ThemeProvider>
-                ) : (
-                    <></>
-                )
+            {logged.success && logged.data[0].role === "Менеджер" ? (
+                <ThemeProvider theme={theme}>
+                    <Button
+                        style={{ marginBottom: "20px" }}
+                        onClick={() => {
+                            navigate("/datainsert/machine/");
+                        }}
+                    >
+                        Добавить новую запись
+                    </Button>
+                </ThemeProvider>
             ) : (
                 <></>
             )}

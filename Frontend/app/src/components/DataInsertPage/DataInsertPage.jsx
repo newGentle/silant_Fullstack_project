@@ -11,10 +11,10 @@ import { useSelector } from "react-redux";
 const DataInsertPage = () => {
     const navigate = useNavigate();
     const params = useParams();
-    const user = useSelector((state) => state.user);
+    
 
     React.useEffect(() => {
-        if (user.success === false) {
+        if (!localStorage.getItem('Authenticated')) {
             navigate('/');
         }
     })

@@ -1,18 +1,31 @@
 import { Button, Link, Table, ThemeProvider } from "@mui/material";
 import * as React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { MaintenanceData } from "../../../../Store/Slicers/MaintenanceSlicer";
 import { theme } from "../../../../Theme/Theme";
 import { MaintenanceFilters } from "../Filters/MaintenanceFilters";
 
 const Maintenance = (props) => {
-    const { maintenance, user } = props;
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const logged = useSelector((state) => state.user);
+
+    const maintenance = useSelector((state) => state.maintenance);
+
+    React.useEffect(() => {
+        if (!maintenance.data) {
+            if (logged.success || localStorage.getItem("accessToken")) {
+                dispatch(MaintenanceData(localStorage.getItem("accessToken")));
+            }
+        }
+    }, [dispatch, logged]);
     return (
         <>
-            {user.success ? (
-                user.data[0].role === "Менеджер" ||
-                user.data[0].role === "Клиент" ||
-                user.data[0].role === "Сервисная компания" ? (
+            {logged.success ? (
+                logged.data[0].role === "Менеджер" ||
+                logged.data[0].role === "Клиент" ||
+                logged.data[0].role === "Сервисная компания" ? (
                     <ThemeProvider theme={theme}>
                         <Button
                             style={{ marginBottom: "20px" }}

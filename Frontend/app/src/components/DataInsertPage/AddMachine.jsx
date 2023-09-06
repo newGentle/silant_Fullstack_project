@@ -97,7 +97,9 @@ const AddMachine = () => {
         
         dispatch(AddMachineData(body));
     };
-
+    if (handbookList.loading) {
+        return 'Загрузка'
+    }
     return (
         <div>
             {created.addmachine && 

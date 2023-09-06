@@ -23,7 +23,7 @@ const Header = () => {
     const userInfo = useSelector((state) => state.user);
     const logged = useSelector((state) => state.login);
     const [menuOpen, setMenuOpen] = React.useState("none");
-
+    
     React.useEffect(() => {
         if (logged.is_Auth || localStorage.getItem("accessToken")) {
             dispatch(UserData(localStorage.getItem("accessToken")));

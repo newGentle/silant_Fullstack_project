@@ -3,15 +3,27 @@ import { Button, Link, Table, ThemeProvider } from "@mui/material";
 import { ComplaintsFilters } from "../Filters/ComplaintsFilters";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../Theme/Theme";
+import { useDispatch, useSelector } from "react-redux";
+import { ComplaintsData } from "../../../../Store/Slicers/ComplaintsSlicer";
 
-const Complaints = (props) => {
-    const { complaints, user } = props;
+const Complaints = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const logged = useSelector((state) => state.user);
+    const complaints = useSelector((state) => state.complaints);
+
+    React.useEffect(() => {
+        if (!complaints.data) {
+            if (logged.success || localStorage.getItem("accessToken")) {
+                dispatch(ComplaintsData(localStorage.getItem("accessToken")));
+            }
+        }
+    }, [dispatch, logged]);
     return (
         <>
-            {user.success ? (
-                user.data[0].role === "Менеджер" ||
-                user.data[0].role === "Сервисная компания" ? (
+            {logged.success ? (
+                logged.data[0].role === "Менеджер" ||
+                logged.data[0].role === "Сервисная компания" ? (
                     <ThemeProvider theme={theme}>
                         <Button
                             style={{ marginBottom: "20px" }}
