@@ -6,11 +6,18 @@ import { Button } from "@mui/material";
 import { AddMaintenance } from "./AddMaintenance";
 import { AddComplaints } from "./AddComplaints";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
+import { useSelector } from "react-redux";
 
 const DataInsertPage = () => {
     const navigate = useNavigate();
     const params = useParams();
+    const user = useSelector((state) => state.user);
 
+    React.useEffect(() => {
+        if (user.success === false) {
+            navigate('/');
+        }
+    })
     return (
         <CustomContainer>
             {params.type === "machine" ? (

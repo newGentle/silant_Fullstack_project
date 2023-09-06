@@ -22,7 +22,14 @@ const Handbook = () => {
     const key = Object.keys(params)[0];
     const id = Object.values(params)[0];
     const handbook = useSelector((state) => state.handbook);
+
+    const user = useSelector((state) => state.user);
+
     React.useEffect(() => {
+        if (user.success === false) {
+            navigate('/');
+        }
+    
         if (key === "engine") {
             dispatch(EngineData(id));
         }
@@ -57,7 +64,7 @@ const Handbook = () => {
             
             dispatch(UsersData(id));
         }
-    }, [key, dispatch, id]);
+    }, [key, dispatch, id, user, navigate]);
 
     return (
         <CustomContainer style={{textAlign: 'center'}}>
