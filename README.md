@@ -9,7 +9,7 @@
     py -m venv venv
     venv\scripts\activate
     pip install -r requirements.txt
-    cd menu_api
+    cd App
     ```
 - Создайте .env файл внутрь папки menu_api и напишите SECRET_KEY = ' API_KEY ' - ключ сгенерированный джанго
 - после наберите в консоль:
@@ -27,7 +27,7 @@
 
 ### Frontend:
 
-- Откройте новый консоль и переходите в папку Frontend и наберите:
+- Откройте новый консоль и переходите в папку Frontend/app и наберите:
     ```sh
     npm i
     npm start
