@@ -37,13 +37,18 @@ const initialState = {
     error: null,
     success: false,
     status: null,
+    data: null
     
 };
 
 const UserInfoSlicer = createSlice({
     name: "user",
     initialState,
-    
+    reducers: {
+        userInfoClear: () => {
+            return initialState;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(UserData.fulfilled, (state, action) => {
             state.data = action.payload;
@@ -64,5 +69,5 @@ const UserInfoSlicer = createSlice({
         });
     },
 });
-
+export const { userInfoClear } = UserInfoSlicer.actions;
 export default UserInfoSlicer.reducer;

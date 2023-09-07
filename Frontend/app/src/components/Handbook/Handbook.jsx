@@ -26,10 +26,6 @@ const Handbook = () => {
     const user = useSelector((state) => state.user);
 
     React.useEffect(() => {
-        if (!localStorage.getItem('Authenticated')) {
-            navigate('/');
-        }
-    
         if (key === "engine") {
             dispatch(EngineData(id));
         }
@@ -49,25 +45,22 @@ const Handbook = () => {
         if (key === "maintenance") {
             dispatch(TypeOfMaintenanceData(id));
         }
-        
+
         if (key === "nodeoffailure") {
-            
             dispatch(TypeOfFailureData(id));
         }
-        
+
         if (key === "recoverymethod") {
-            
             dispatch(MethodOfRecoveryData(id));
         }
 
         if (key === "servicecompany" || key === "client") {
-            
             dispatch(UsersData(id));
         }
     }, [key, dispatch, id, user, navigate]);
 
     return (
-        <CustomContainer style={{textAlign: 'center'}}>
+        <CustomContainer style={{ textAlign: "center" }}>
             {handbook.success && key === "engine" ? (
                 <>
                     <h1>{handbook.engine.title}</h1>
@@ -103,7 +96,8 @@ const Handbook = () => {
                     <h1>{handbook.methodofrecovery.title}</h1>
                     <h3>{handbook.methodofrecovery.description}</h3>
                 </>
-            ) : handbook.success && (key === "servicecompany" || key === "client") ? (
+            ) : handbook.success &&
+              (key === "servicecompany" || key === "client") ? (
                 <>
                     <h1>{handbook.users.username}</h1>
                     <h3>{handbook.users.role}</h3>
@@ -112,7 +106,11 @@ const Handbook = () => {
                 <></>
             )}
             <ThemeProvider theme={theme}>
-                <Button onClick={() => { navigate(-1)}}>
+                <Button
+                    onClick={() => {
+                        navigate(-1);
+                    }}
+                >
                     Назад
                 </Button>
             </ThemeProvider>

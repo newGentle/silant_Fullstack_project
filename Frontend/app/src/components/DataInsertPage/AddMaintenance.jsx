@@ -17,7 +17,7 @@ import { theme } from "../../Theme/Theme";
 import {
     AddMaintenanceData,
     MaintenanceData,
-    afterCreated,
+    cleanStateAfterCreated,
 } from "../../Store/Slicers/MaintenanceSlicer";
 import { useNavigate } from "react-router-dom";
 import {
@@ -29,7 +29,7 @@ const AddMaintenance = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const typeOfMaintenance = useSelector((state) => state.maintenance);
-    const listOfMaintenance = useSelector((state) => state.handbook);
+    const handbooksList = useSelector((state) => state.handbook);
 
     const machines = typeOfMaintenance.success
         ? typeOfMaintenance.data.map(
@@ -38,7 +38,6 @@ const AddMaintenance = () => {
         : [];
 
     const settedMachines = [...new Set(machines)];
-    settedMachines.sort();
 
     const [machine, setMachine] = React.useState();
     const [maintenance, setMaintenance] = React.useState();
@@ -50,23 +49,30 @@ const AddMaintenance = () => {
         React.useState();
 
     React.useEffect(() => {
-        if (!typeOfMaintenance.success || !listOfMaintenance.success) {
+        if (!typeOfMaintenance.data) {
             dispatch(MaintenanceData(localStorage.getItem("accessToken")));
+        }
+
+        if (!handbooksList.typeofmaintenance) {
             dispatch(TypeOfMaintenanceData());
+        }
+
+        if (!handbooksList.users) {
             dispatch(UsersData());
         }
         if (typeOfMaintenance.success && typeOfMaintenance.addmaintenance) {
             setTimeout(() => {
-                dispatch(afterCreated());
+                dispatch(cleanStateAfterCreated());
                 navigate("/");
             }, 2000);
         }
     }, [
         dispatch,
         navigate,
-        typeOfMaintenance.success,
-        typeOfMaintenance.addmaintenance,
-        listOfMaintenance.success,
+        typeOfMaintenance,
+        handbooksList.machinelist,
+        handbooksList.typeofmaintenance,
+        handbooksList.users,
     ]);
 
     const formSubmit = (event) => {
@@ -83,6 +89,16 @@ const AddMaintenance = () => {
 
         dispatch(AddMaintenanceData(body));
     };
+
+    if (
+        !typeOfMaintenance.data &&
+        !handbooksList.machinelist &&
+        !handbooksList.typeofmaintenance &&
+        !handbooksList.users
+    ) {
+        return "Загрузка";
+    }
+
     return (
         <div>
             {typeOfMaintenance.addmaintenance && (
@@ -121,8 +137,8 @@ const AddMaintenance = () => {
                         label="Выберите вид ТО"
                         onChange={(e) => setMaintenance(e.target.value)}
                     >
-                        {listOfMaintenance.success &&
-                            listOfMaintenance.typeofmaintenance.map((item) => (
+                        {handbooksList.typeofmaintenance &&
+                            handbooksList.typeofmaintenance.map((item) => (
                                 <MenuItem key={item.id} value={item.title}>
                                     {item.title}
                                 </MenuItem>
@@ -230,9 +246,8 @@ const AddMaintenance = () => {
                             setMaintenanceServiceCompany(e.target.value)
                         }
                     >
-                        {listOfMaintenance.success &&
-                            listOfMaintenance.users &&
-                            listOfMaintenance.users.map(
+                        {handbooksList.users &&
+                            handbooksList.users.map(
                                 (item) =>
                                     item.users.role === "SC" && (
                                         <MenuItem

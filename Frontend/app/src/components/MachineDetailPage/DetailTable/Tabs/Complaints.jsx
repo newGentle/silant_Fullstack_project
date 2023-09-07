@@ -10,7 +10,6 @@ const Complaints = (props) => {
                 <tbody>
                     <tr>
                         <th>№ п/п</th>
-                        <th>Зав. № Техники</th>
                         <th>Дата отказа</th>
                         <th>Наработка, м/час</th>
                         <th>Узел отказа</th>
@@ -28,7 +27,6 @@ const Complaints = (props) => {
                         complaints.machine.data.complaints_machine.map((value, idx) => (
                             <tr key={value.id}>
                                 <td>{idx + 1}</td>
-                                <td>{value.machine.factoryNumberOfMachine}</td>
                                 <td>{value.dateOfFailure}</td>
                                 <td>{value.operatingTime}</td>
                                 <td>{value.nodeOfFailure.title}</td>

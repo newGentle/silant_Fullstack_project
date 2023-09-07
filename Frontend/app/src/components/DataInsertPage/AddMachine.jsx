@@ -24,7 +24,10 @@ import {
     TransmissionData,
     UsersData,
 } from "../../Store/Slicers/HandbookSlicer";
-import { AddMachineData, afterCreated } from "../../Store/Slicers/MachineSlicer";
+import {
+    AddMachineData,
+    cleanStateAfterCreated,
+} from "../../Store/Slicers/MachineSlicer";
 import { useNavigate } from "react-router-dom";
 
 const AddMachine = () => {
@@ -35,20 +38,42 @@ const AddMachine = () => {
     const created = useSelector((state) => state.machine);
 
     React.useEffect(() => {
-        dispatch(MachineListData());
-        dispatch(EngineData());
-        dispatch(TransmissionData());
-        dispatch(MainAxleData());
-        dispatch(SteeringAxleData());
-        dispatch(UsersData());
-        if (created.addmachine){
-            setTimeout(() => {
-                dispatch(afterCreated());
-                navigate('/');
-            },2000)
+        if (!handbookList.machinelist) {
+            dispatch(MachineListData());
         }
-    }, [dispatch, created, navigate]);
-    
+        if (!handbookList.engine) {
+            dispatch(EngineData());
+        }
+        if (!handbookList.transmission) {
+            dispatch(TransmissionData());
+        }
+        if (!handbookList.mainaxle) {
+            dispatch(MainAxleData());
+        }
+        if (!handbookList.steeringaxle) {
+            dispatch(SteeringAxleData());
+        }
+        if (!handbookList.users) {
+            dispatch(UsersData());
+        }
+
+        if (created.addmachine) {
+            setTimeout(() => {
+                dispatch(cleanStateAfterCreated());
+                navigate("/");
+            }, 2000);
+        }
+    }, [
+        dispatch,
+        created.addmachine,
+        navigate,
+        handbookList.machinelist,
+        handbookList.engine,
+        handbookList.transmission,
+        handbookList.mainaxle,
+        handbookList.steeringaxle,
+        handbookList.users,
+    ]);
 
     const [factoryNumberOfMachine, setFactoryNumberOfMachine] =
         React.useState("");
@@ -77,40 +102,48 @@ const AddMachine = () => {
         event.preventDefault();
         const body = JSON.stringify({
             factoryNumberOfMachine: factoryNumberOfMachine,
-            modelOfMachine: {title: machine},
-            modelOfEngine: {title: engine},
+            modelOfMachine: { title: machine },
+            modelOfEngine: { title: engine },
             factoryNumberOfEngine: factoryNumberOfEngine,
-            modelOfTransmission: {title: transmission},
+            modelOfTransmission: { title: transmission },
             factoryNumberOfTransmission: factoryNumberOfTransmission,
-            modelOfMainAxle: {title: mainAxle},
+            modelOfMainAxle: { title: mainAxle },
             factoryNumberOfMainAxle: factoryNumberOfMainAxle,
-            modelOfSteeringAxle: {title: steeringAxle},
+            modelOfSteeringAxle: { title: steeringAxle },
             factoryNumberOfSteeringAxle: factoryNumberOfSteeringAxle,
             supplyContract: supplyContract,
             dateOfShipment: dateOfShipment,
             consumer: consumer,
             operationAddress: operationAddress,
             additionalOptions: additionalOptions,
-            client: {first_name: client},
-            serviceCompany: {first_name: serviceCompany},
+            client: { first_name: client },
+            serviceCompany: { first_name: serviceCompany },
         });
-        
+
         dispatch(AddMachineData(body));
     };
-    if (handbookList.loading) {
-        return 'Загрузка'
+    if (
+        !handbookList.machinelist &&
+        !handbookList.engine &&
+        !handbookList.transmission &&
+        !handbookList.mainaxle &&
+        !handbookList.steeringaxle &&
+        !handbookList.users
+    ) {
+        return "Загрузка";
     }
     return (
         <div>
-            {created.addmachine && 
-            <Alert severity="success">Запись Добавлен</Alert>
-            }
+            {created.addmachine && (
+                <Alert severity="success">Запись Добавлен</Alert>
+            )}
             <form
                 style={{ display: "flex", flexDirection: "column" }}
                 onSubmit={formSubmit}
             >
-                <FormControl style={{ margin: "10px 0" }} required >
-                    <TextField required
+                <FormControl style={{ margin: "10px 0" }} required>
+                    <TextField
+                        required
                         label="Зав. № Техники"
                         onChange={(e) =>
                             setFactoryNumberOfMachine(e.target.value)
@@ -137,7 +170,8 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Зав. № двигателя"
                         onChange={(e) =>
                             setFactoryNumberOfEngine(e.target.value)
@@ -165,7 +199,8 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Зав. № трансмиссии"
                         onChange={(e) =>
                             setFactoryNumberOfTransmission(e.target.value)
@@ -194,7 +229,8 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Зав. № ведущего моста"
                         onChange={(e) =>
                             setFactoryNumberOfMainAxle(e.target.value)
@@ -223,7 +259,8 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Зав. № управляемого моста"
                         onChange={(e) =>
                             setFactoryNumberOfSteeringAxle(e.target.value)
@@ -252,7 +289,8 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Договор поставки №, дата"
                         onChange={(e) => setSupplyContract(e.target.value)}
                     />
@@ -292,14 +330,16 @@ const AddMachine = () => {
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Грузополучатель"
                         onChange={(e) => setConsumer(e.target.value)}
                     />
                 </FormControl>
 
                 <FormControl style={{ margin: "10px 0" }} required>
-                    <TextField required
+                    <TextField
+                        required
                         label="Адрес поставки"
                         onChange={(e) => setOperationAddress(e.target.value)}
                     />

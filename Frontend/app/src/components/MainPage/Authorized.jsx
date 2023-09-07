@@ -1,10 +1,7 @@
 import * as React from "react";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
-import { useDispatch, useSelector } from "react-redux";
 import { MainPageTable } from "./MainPageTable/MainPageTable";
-import { ComplaintsData } from "../../Store/Slicers/ComplaintsSlicer";
-import { MachineData } from "../../Store/Slicers/MachineSlicer";
-import { MaintenanceData } from "../../Store/Slicers/MaintenanceSlicer";
+import { useSelector } from "react-redux";
 
 const Authorized = () => {
 

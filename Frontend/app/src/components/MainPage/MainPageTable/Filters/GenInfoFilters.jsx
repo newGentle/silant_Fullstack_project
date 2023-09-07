@@ -4,6 +4,7 @@ import * as React from "react";
 const GenInfoFilters = () => {
     const queryTheme = useTheme();
     const query_md = useMediaQuery(queryTheme.breakpoints.down("md"));
+    
     function filter(id, item) {
         let _item = document.getElementById(item).value;
         const tbody = document.querySelector("tbody");
@@ -21,10 +22,13 @@ const GenInfoFilters = () => {
         }
     }
 
-    function clearOtherInputs() {
+    function clearOtherInputs(id) {
         const inputs = document.querySelectorAll("input");
+        
         inputs.forEach((item) => {
-            item.value = "";
+            if (id !== item.id) {
+                item.value = null;
+            }
         });
     }
     return (
@@ -43,8 +47,8 @@ const GenInfoFilters = () => {
                     type="text"
                     placeholder="техника"
                     id={"machine"}
-                    onClick={() => {
-                        clearOtherInputs();
+                    onClick={(event) => {
+                        clearOtherInputs(event.target.id);
                     }}
                     onChange={() => {
                         filter("1", "machine");
@@ -59,8 +63,8 @@ const GenInfoFilters = () => {
                     type="text"
                     placeholder="Двигатель"
                     id={"engine"}
-                    onClick={() => {
-                        clearOtherInputs();
+                    onClick={(event) => {
+                        clearOtherInputs(event.target.id);
                     }}
                     onChange={() => {
                         filter("3", "engine");
@@ -75,8 +79,8 @@ const GenInfoFilters = () => {
                     type="text"
                     placeholder="Трансмиссия"
                     id={"transmission"}
-                    onClick={() => {
-                        clearOtherInputs();
+                    onClick={(event) => {
+                        clearOtherInputs(event.target.id);
                     }}
                     onChange={() => {
                         filter("5", "transmission");
@@ -91,8 +95,8 @@ const GenInfoFilters = () => {
                     type="text"
                     placeholder="Ведущий мост"
                     id={"mainAxle"}
-                    onClick={() => {
-                        clearOtherInputs();
+                    onClick={(event) => {
+                        clearOtherInputs(event.target.id);
                     }}
                     onChange={() => {
                         filter("7", "mainAxle");
@@ -107,8 +111,8 @@ const GenInfoFilters = () => {
                     type="text"
                     placeholder="Управляемый мост"
                     id={"steeringAxle"}
-                    onClick={() => {
-                        clearOtherInputs();
+                    onClick={(event) => {
+                        clearOtherInputs(event.target.id);
                     }}
                     onChange={() => {
                         filter("9", "steeringAxle");

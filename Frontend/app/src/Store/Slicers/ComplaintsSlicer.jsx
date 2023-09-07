@@ -76,7 +76,11 @@ const ComplaintsSlicer = createSlice({
         cleanStateAfterCreated: (state) => {
             state.addcomplaints = null;
         },
+        complaintsClear: () => {
+            return initialState;
+        },
     },
+
     extraReducers: (builder) => {
         builder.addCase(AddComplaintsData.fulfilled, (state, action) => {
             state.addcomplaints = action.payload;
@@ -115,5 +119,5 @@ const ComplaintsSlicer = createSlice({
         });
     },
 });
-export const { cleanStateAfterCreated } = ComplaintsSlicer.actions
+export const { cleanStateAfterCreated, complaintsClear } = ComplaintsSlicer.actions
 export default ComplaintsSlicer.reducer;

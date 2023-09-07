@@ -13,11 +13,17 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import * as React from "react";
 import { theme } from "../../Theme/Theme";
 import { useDispatch, useSelector } from "react-redux";
-import { MethodOfRecoveryData, TypeOfFailureData, UsersData } from "../../Store/Slicers/HandbookSlicer";
-import { AddComplaintsData, cleanStateAfterCreated } from "../../Store/Slicers/ComplaintsSlicer";
+import {
+    MethodOfRecoveryData,
+    TypeOfFailureData,
+    UsersData,
+} from "../../Store/Slicers/HandbookSlicer";
+import {
+    AddComplaintsData,
+    cleanStateAfterCreated,
+} from "../../Store/Slicers/ComplaintsSlicer";
 import { MachineData } from "../../Store/Slicers/MachineSlicer";
 import { useNavigate } from "react-router-dom";
-
 
 const AddComplaints = () => {
     const dispatch = useDispatch();
@@ -34,7 +40,7 @@ const AddComplaints = () => {
             recoveryMethod: recoveryMethod,
             usedSpareParts: usedSpareParts,
             dateOfRecovery: dateOfRecovery,
-            serviceCompany: serviceCompany
+            serviceCompany: serviceCompany,
         });
         dispatch(AddComplaintsData(body));
     };
@@ -48,35 +54,55 @@ const AddComplaints = () => {
     const [usedSpareParts, setUsedSpareParts] = React.useState();
     const [dateOfRecovery, setDateOfRecovery] = React.useState();
     const [serviceCompany, setServiceCompany] = React.useState();
-    
+
     const handbook = useSelector((state) => state.handbook);
     const machines = useSelector((state) => state.machine);
     const created = useSelector((state) => state.complaints);
 
     React.useEffect(() => {
-        if (machines.data === null) {
-            dispatch(MachineData(localStorage.getItem("accessToken")))
+        if (!handbook.typeoffailure) {
             dispatch(TypeOfFailureData());
+        }
+        if (!handbook.methodofrecovery) {
             dispatch(MethodOfRecoveryData());
+        }
+
+        if (!handbook.users) {
             dispatch(UsersData());
         }
-        if (created.addcomplaints){
+
+        if (!machines.data) {
+            dispatch(MachineData(localStorage.getItem("accessToken")));
+        }
+
+        if (created.addcomplaints) {
             setTimeout(() => {
                 dispatch(cleanStateAfterCreated());
-                navigate('/');
-            },2000)
+                navigate("/");
+            }, 2000);
         }
-    }, [dispatch, machines.data, navigate, created])
+    }, [
+        dispatch,
+        machines.data,
+        handbook.typeoffailure,
+        handbook.methodofrecovery,
+        handbook.users,
+        navigate,
+        created,
+    ]);
 
-
-    const machinesMap = machines.success
-        ? machines.data.map(
-              (item) => item.factoryNumberOfMachine
-          )
+    const machinesMap = machines.data
+        ? machines.data.map((item) => item.factoryNumberOfMachine)
         : [];
 
-    const settedMachines = [...new Set(machinesMap)];        
-
+    const settedMachines = [...new Set(machinesMap)];
+    if (
+        !machines.data &&
+        !handbook.typeoffailure &&
+        !handbook.methodofrecovery
+    ) {
+        return "Загрузка";
+    }
     return (
         <div>
             <form
@@ -169,7 +195,9 @@ const AddComplaints = () => {
                     <TextField
                         required
                         label="Описание отказа"
-                        onChange={(e) => setDescriptionOfFailure(e.target.value)}
+                        onChange={(e) =>
+                            setDescriptionOfFailure(e.target.value)
+                        }
                     />
                 </FormControl>
 
@@ -181,9 +209,7 @@ const AddComplaints = () => {
                     <Select
                         value={recoveryMethod || ""}
                         label="Способ восстановления"
-                        onChange={(e) =>
-                            setRecoveryMethod(e.target.value)
-                        }
+                        onChange={(e) => setRecoveryMethod(e.target.value)}
                     >
                         {handbook.methodofrecovery &&
                             handbook.methodofrecovery.map((item) => (
@@ -228,7 +254,7 @@ const AddComplaints = () => {
                                                   formattedDate.getMonth() + 1
                                               }`;
                                     const year = formattedDate.getFullYear();
-                                     setDateOfRecovery(
+                                    setDateOfRecovery(
                                         year + "-" + month + "-" + date
                                     );
                                 }}
@@ -245,9 +271,7 @@ const AddComplaints = () => {
                     <Select
                         value={serviceCompany || ""}
                         label="Сервисная компания"
-                        onChange={(e) =>
-                            setServiceCompany(e.target.value)
-                        }
+                        onChange={(e) => setServiceCompany(e.target.value)}
                     >
                         {handbook.users &&
                             handbook.users.map((item) => (
@@ -258,7 +282,6 @@ const AddComplaints = () => {
                     </Select>
                 </FormControl>
 
-                
                 <ThemeProvider theme={theme}>
                     <Button type="submit">Добавить</Button>
                 </ThemeProvider>

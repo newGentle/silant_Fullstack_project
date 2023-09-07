@@ -2,21 +2,20 @@ import React from "react";
 import { CustomContainer } from "../CustomComponents/CustomContainer/CustomContainer";
 import { Button, ThemeProvider } from "@mui/material";
 import { theme } from "../../Theme/Theme";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../Store/Slicers/AuthSlicer";
 import { useNavigate } from "react-router-dom";
+import { complaintsClear } from "../../Store/Slicers/ComplaintsSlicer";
+import { detailedClear } from "../../Store/Slicers/DetailedSlicer";
+import { handbookClear } from "../../Store/Slicers/HandbookSlicer";
+import { machineClear } from "../../Store/Slicers/MachineSlicer";
+import { maintenanceClear } from "../../Store/Slicers/MaintenanceSlicer";
+import { userInfoClear } from "../../Store/Slicers/UserInfoSlicer";
 
 const LogoutPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const user = useSelector((state) => state.user);
-
-    React.useEffect(() => {
-        if (user.success === false) {
-            navigate('/');
-        }
-    }, [navigate, user])
     return (
         <CustomContainer>
             <div style={{ textAlign: "center", marginTop: "50px" }}>
@@ -25,7 +24,13 @@ const LogoutPage = () => {
                     <Button
                         onClick={() => {
                             dispatch(logout());
-                            navigate('/')
+                            dispatch(complaintsClear());
+                            dispatch(detailedClear());
+                            dispatch(handbookClear());
+                            dispatch(machineClear());
+                            dispatch(maintenanceClear());
+                            dispatch(userInfoClear());
+                            navigate("/");
                         }}
                     >
                         Выйти
@@ -34,6 +39,6 @@ const LogoutPage = () => {
             </div>
         </CustomContainer>
     );
-}
+};
 
 export { LogoutPage };

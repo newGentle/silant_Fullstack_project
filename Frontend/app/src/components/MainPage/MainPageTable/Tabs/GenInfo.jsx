@@ -1,28 +1,46 @@
 import * as React from "react";
-import { Button, Link, Table, ThemeProvider } from "@mui/material";
+import { Button, IconButton, Link, Table, ThemeProvider } from "@mui/material";
 import { GenInfoFilters } from "../Filters/GenInfoFilters";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../Theme/Theme";
 import { useDispatch, useSelector } from "react-redux";
 import { MachineData } from "../../../../Store/Slicers/MachineSlicer";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
 const GenInfo = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const logged = useSelector((state) => state.user);
     const machine = useSelector((state) => state.machine);
+    const [sorted, setSorted] = React.useState('asc');
+    let machineArray = [];
 
     React.useEffect(() => {
-        if (!machine.data) {
-            if (logged.success || localStorage.getItem("accessToken")) {
-                dispatch(MachineData(localStorage.getItem("accessToken")));
-            }
+        if (!machine.data || !logged.data) {
+            dispatch(MachineData(localStorage.getItem("accessToken")));
         }
-    }, [dispatch, logged]);
+    }, [dispatch, logged.data, machine.data]);
 
-    if (logged.loading && !logged.success) {
-        return "loading";
+    if (logged.loading && !machine.data) {
+        return "Загрузка";
     }
+
+    
+    if (machine.data) {
+        machineArray = [...machine.data];
+        machineArray.sort((a, b) => {
+            if (sorted === 'desc') {
+                return a.dateOfShipment <= b.dateOfShipment ? -1 : 1;
+            }
+            if (sorted === 'asc') {
+                return a.dateOfShipment <= b.dateOfShipment ? 1 : -1;;
+            }
+            return 0;
+        });
+        
+    }
+
     return (
         <>
             {logged.success && logged.data[0].role === "Менеджер" ? (
@@ -60,19 +78,34 @@ const GenInfo = () => {
                             <th>Зав. № ведущего моста</th>
                             <th>Модель управляемого моста </th>
                             <th>Зав. № управляемого моста</th>
-                            <th>Дата отгрузки с завода</th>
+                            <th>
+                                <IconButton
+                                    sx={{
+                                        fontSize: "12px",
+                                        color: "#000",
+                                        fontFamily: "Astra",
+                                        fontWeight: "bold",
+                                    }}
+                                    disableTouchRipple
+                                    disableRipple
+                                    disableFocusRipple
+                                    onClick={() => {sorted === 'desc' ? setSorted('asc') : setSorted('desc')}}
+                                >
+                                    Дата отгрузки с завода {sorted === 'desc' ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
+                                </IconButton>
+                            </th>
                             <th>Покупатель</th>
                             <th>Грузополучатель (конечный потребитель)</th>
                             <th>Адрес поставки (эксплутация)</th>
                             <th>Комплектация (доп. опции)</th>
                             <th>Сервисная компания</th>
                         </tr>
-                        {machine.loading || !machine.success ? (
+                        {machineArray.length <= 0 ? (
                             <tr>
                                 <td>Загрузка</td>
                             </tr>
                         ) : (
-                            machine.data.map((value, idx) => (
+                            machineArray.map((value, idx) => (
                                 <tr key={value.factoryNumberOfMachine}>
                                     <td>{idx + 1}</td>
                                     <td>
@@ -82,8 +115,13 @@ const GenInfo = () => {
                                             {value.modelOfMachine.title}
                                         </Link>
                                     </td>
-                                    <td>{value.factoryNumberOfMachine}</td>
-
+                                    <td>
+                                        <Link
+                                            href={`machine/${value.factoryNumberOfMachine}`}
+                                        >
+                                            {value.factoryNumberOfMachine}
+                                        </Link>
+                                    </td>
                                     <td>
                                         <Link
                                             href={`engine/${value.modelOfEngine.id}`}

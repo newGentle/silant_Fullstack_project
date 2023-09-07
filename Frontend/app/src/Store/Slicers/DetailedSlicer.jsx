@@ -42,7 +42,11 @@ const initialState = {
 const DetailedSlicer = createSlice({
     name: "detailed",
     initialState,
-    
+    reducers: {
+        detailedClear: () => {
+            return initialState;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(DetailedData.fulfilled, (state, action) => {
             state.data = action.payload;
@@ -64,4 +68,5 @@ const DetailedSlicer = createSlice({
     },
 });
 
+export const { detailedClear } = DetailedSlicer.actions;
 export default DetailedSlicer.reducer;

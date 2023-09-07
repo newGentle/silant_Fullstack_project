@@ -77,8 +77,11 @@ const MaintenanceSlicer = createSlice({
     name: "maintenance",
     initialState,
     reducers: {
-        afterCreated: (state) => {
+        cleanStateAfterCreated: (state) => {
             state.addmaintenance = null
+        },
+        maintenanceClear: () => {
+            return initialState;
         }
     },
 
@@ -120,5 +123,5 @@ const MaintenanceSlicer = createSlice({
         });
     },
 });
-export const { afterCreated } = MaintenanceSlicer.actions
+export const { cleanStateAfterCreated, maintenanceClear } = MaintenanceSlicer.actions
 export default MaintenanceSlicer.reducer;

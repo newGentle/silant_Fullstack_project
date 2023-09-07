@@ -52,16 +52,13 @@ const AuthSlicer = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        logout: (state) => {
+        logout: () => {
             localStorage.removeItem("accessToken")
             localStorage.removeItem("refreshToken")
             localStorage.removeItem("userLogin")
             localStorage.removeItem("user_firstname")
             localStorage.removeItem("Authenticated")
-            state.loading = false
-            state.error = null
-            state.success = false
-            state.is_Auth = false
+            return initialState
         }
     },
     extraReducers: (builder) => {

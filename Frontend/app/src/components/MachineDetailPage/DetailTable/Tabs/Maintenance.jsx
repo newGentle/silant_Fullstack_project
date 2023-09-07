@@ -10,7 +10,6 @@ const Maintenance = (props) => {
                 <tbody>
                     <tr>
                         <th>№ п/п</th>
-                        <th>Зав. № машины</th>
                         <th>Вид ТО</th>
                         <th>Дата проведения ТО</th>
                         <th>Наработка, м/час</th>
@@ -26,7 +25,6 @@ const Maintenance = (props) => {
                         maintenance.machine.data.machine.map((value, idx) => (
                             <tr key={value.id}>
                                 <td>{idx + 1}</td>
-                                <td>{value.machine.factoryNumberOfMachine}</td>
                                 <td>{value.typeOfMaintenance.title}</td>
                                 <td>{value.dateOfMaintenance}</td>
                                 <td>{value.operatingTime}</td>

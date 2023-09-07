@@ -320,7 +320,11 @@ const initialState = {
 const HandbookSlicer = createSlice({
     name: "handbook",
     initialState,
-
+    reducers: {
+        handbookClear: () => {
+            return initialState;
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(MachineListData.fulfilled, (state, action) => {
             state.machinelist = action.payload;
@@ -484,5 +488,5 @@ const HandbookSlicer = createSlice({
         });
     },
 });
-
+export const { handbookClear } = HandbookSlicer.actions;
 export default HandbookSlicer.reducer;
