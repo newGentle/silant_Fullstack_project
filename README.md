@@ -11,7 +11,7 @@
     pip install -r requirements.txt
     cd App
     ```
-- Создайте .env файл внутрь папки menu_api и напишите SECRET_KEY = ' API_KEY ' - ключ сгенерированный джанго
+- Создайте .env файл внутрь папки App и напишите SECRET_KEY = ' API_KEY ' - ключ сгенерированный джанго
 - после наберите в консоль:
     ```sh
     py manage.py runserver
