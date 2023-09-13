@@ -44,7 +44,7 @@ const Header = () => {
                 width: "100%",
                 height: "100%",
                 backgroundColor: "var(--bg_color)",
-                zIndex: 1000,
+                zIndex: 10,
             }}
         >
             <IconButton
@@ -199,7 +199,7 @@ const Header = () => {
                         </ThemeProvider>
                     </div>
                 ) : (
-                    <div>
+                    <div style={{display: query_md ? "none" : "block"}}>
                         <ThemeProvider theme={theme}>
                             <Button
                                 onClick={() => {
